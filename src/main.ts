@@ -5,16 +5,10 @@ import { postController } from "./controllers/post.ts";
 
 const app = new App();
 
+app.serveStatic('/static')
+
 app.get("/", homeController);
 app.get("/posts", postsController);
 app.get("/posts/:id", postController);
 
 Deno.serve(app.handle);
-
-/*
-    handle GET / requests
-    handle GET /posts requests
-    handle GET /posts/:id requests
-
-    serve static via /static route
-*/
