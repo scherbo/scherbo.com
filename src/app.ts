@@ -7,15 +7,15 @@ type RegisteredRoute = {
 };
 
 export class App {
-  getRoutes: RegisteredRoute[] = []
-  pathToStaticDir?: string
+  getRoutes: RegisteredRoute[] = [];
+  pathToStaticDir?: string;
 
   handle = (request: Request): Response | Promise<Response> => {
     const requestUrl = new URL(request.url);
     const requestPath = requestUrl.pathname;
 
     if (this.pathToStaticDir && requestPath.startsWith(this.pathToStaticDir)) {
-        return serveDir(request)
+      return serveDir(request);
     }
 
     if (request.method === "GET") {
@@ -36,6 +36,6 @@ export class App {
   };
 
   serveStatic(pathToStaticDir: string) {
-    this.pathToStaticDir = pathToStaticDir
+    this.pathToStaticDir = pathToStaticDir;
   }
 }

@@ -1,5 +1,6 @@
 export function homeController(): Response {
-    return new Response(`
+  return new Response(
+    `
         <!doctype html>
         <html>
             <head>
@@ -9,10 +10,12 @@ export function homeController(): Response {
                 <div>hehexd</div>
             </body>
         </html>
-    `, {
-        status: 200,
-        headers: {
-            'content-type': 'text/html',
-        }
-    })
+    `,
+    {
+      status: 200,
+      headers: {
+        "content-type": "text/html",
+      },
+    },
+  );
 }
