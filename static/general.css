@@ -1,0 +1,43 @@
+/* Contains general styles and global css variables */
+/* ================================================ */
+
+:root {
+  font-family: Inter, sans-serif;
+  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+
+  --info: #3498DB;
+  --warning: #F39C12;
+  --success: #2ECC71;
+  --danger: #E74C3C;
+}
+
+@supports (font-variation-settings: normal) {
+  :root { font-family: InterVariable, sans-serif; }
+}
+
+:root[data-theme='dark'] {
+  --bg-main: #131418;
+  --text-main: #fff;
+  --bg-secondary: #1D1E25;
+  --text-secondary: #494F68;
+}
+
+:root[data-theme='light'] {
+  --bg-main: #fff;
+  --text-main: #131418;
+  --bg-secondary: #F4F4F4;
+  --text-secondary: #959BB0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+html {
+  font-size: 10px;
+  background-color: var(--bg-main);
+}
