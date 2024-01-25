@@ -1,16 +1,8 @@
+import { homeTmpl } from '../templates/home.ts'
+
 export function homeController(): Response {
   return new Response(
-    `
-        <!doctype html>
-        <html>
-            <head>
-                <link href="/static/main.css" rel="stylesheet" />
-            </head>
-            <body>
-                <div>hehexd</div>
-            </body>
-        </html>
-    `,
+    homeTmpl(),
     {
       status: 200,
       headers: {
