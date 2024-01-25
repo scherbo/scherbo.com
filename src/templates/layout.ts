@@ -17,11 +17,16 @@ export function layoutTmpl(props: LayoutProps) {
       ${headTmpl(props)}
 
       <body>
-        ${headerTmpl()}
+        <div class="flex direction-column full-height">
+          <!-- header -->
+          ${headerTmpl()}
 
-        ${props.content}
+          <!-- page content -->
+          ${props.content}
 
-        ${footerTmpl()}
+          <!-- footer -->
+          ${footerTmpl()}
+        </div>
       </body>
     </html>
   `;

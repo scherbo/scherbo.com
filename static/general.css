@@ -33,11 +33,28 @@
   box-sizing: border-box;
 }
 
-body, h1, h2, h3, h4, h5, h6, p {
+body, ul, h1, h2, h3, h4, h5, h6, p {
   margin: 0;
+}
+
+ul {
+  padding: 0;
 }
 
 html {
   font-size: 10px;
   background-color: var(--bg-main);
+}
+
+hr {
+  border-color: var(--bg-secondary);
+}
+
+/* USED TO CONTROL SVG COLOR, NOT FINAL VERSION */
+.fill-main {
+  fill: var(--text-main);
+}
+
+.fill-secondary {
+  fill: var(--text-secondary);
 }
