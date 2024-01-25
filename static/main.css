@@ -1,8 +1,4 @@
-* {
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 1rem;
-    background-color: lightskyblue;
-}
+@import url('./normalize.css');
+@import url('./general.css');
+@import url('./typography.css');
+@import url('./layout.css');
