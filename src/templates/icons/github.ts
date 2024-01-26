@@ -1,6 +1,10 @@
-import { html } from '../../utilities/html.ts'
+import { html } from "../../utilities/html.ts";
 
-export function githubIconTmpl(width: number, height: number, classColor: string) {
+export function githubIconTmpl(
+  width: number,
+  height: number,
+  classColor: string,
+) {
   return html`
     <?xml version="1.0" encoding="utf-8"?>
     <svg class="${classColor}" height="${height}" width="${width}" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -20,5 +24,5 @@ export function githubIconTmpl(width: number, height: number, classColor: string
           c6.8,19,9.6,38.5,8.6,58.6c-0.1,1.1,0.5,2.6,1.2,3.5C243,374.6,247.3,398.2,244.2,423.4z"/>
       </g>
     </svg>
-  `
+  `;
 }

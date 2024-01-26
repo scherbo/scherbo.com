@@ -47,6 +47,7 @@ html {
 }
 
 hr {
+  border-top: none;
   border-color: var(--bg-secondary);
 }
 

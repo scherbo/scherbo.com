@@ -1,6 +1,10 @@
-import { html } from '../../utilities/html.ts'
+import { html } from "../../utilities/html.ts";
 
-export function houseIconTmpl(width: number, height: number, classColor: string) {
+export function houseIconTmpl(
+  width: number,
+  height: number,
+  classColor: string,
+) {
   return html`
     <?xml version="1.0" encoding="utf-8"?>
     <svg class="${classColor}" width="${width}" height="${height}" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -12,5 +16,5 @@ export function houseIconTmpl(width: number, height: number, classColor: string)
       <path opacity="0.5" d="M12.0494 13.25C12.7142 13.25 13.2871 13.2499 13.7458 13.3116C14.2375 13.3777 14.7087 13.5268 15.091 13.909C15.4732 14.2913 15.6223 14.7625 15.6884 15.2542C15.7462 15.6842 15.7498 16.2146 15.75 16.827L15.75 21.25H8.25L8.25 16.9506C8.24997 16.2858 8.24993 15.7129 8.31161 15.2542C8.37771 14.7625 8.52677 14.2913 8.90901 13.909C9.29126 13.5268 9.76252 13.3777 10.2542 13.3116C10.7129 13.2499 11.2858 13.25 11.9506 13.25H12.0494Z"/>
       <path opacity="0.5" d="M16 3H18.5C18.7761 3 19 3.22386 19 3.5L19 7.63955L15.5 4.83955V3.5C15.5 3.22386 15.7239 3 16 3Z"/>
     </svg>
-  `
+  `;
 }

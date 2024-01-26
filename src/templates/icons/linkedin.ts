@@ -1,6 +1,10 @@
-import { html } from '../../utilities/html.ts'
+import { html } from "../../utilities/html.ts";
 
-export function linkedinIconTmpl(width: number, height: number, classColor: string) {
+export function linkedinIconTmpl(
+  width: number,
+  height: number,
+  classColor: string,
+) {
   return html`
     <?xml version="1.0" encoding="utf-8"?>
     <svg class="${classColor}" height="${height}" width="${width}" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -11,5 +15,5 @@ export function linkedinIconTmpl(width: number, height: number, classColor: stri
       c-1.4,3.4-1.2,8.2-1.2,13.1v86.3H71.8c0,0,0.7-146.4,0-159.7h56.1v25.1c3.3-11,21.2-26.6,49.8-26.6c35.5,0,63.3,23,63.3,72.4V508.1z
       "/>
     </svg>
-  `
+  `;
 }
