@@ -1,4 +1,7 @@
 {
+    "imports": {
+        "frontmatter": "https://deno.land/std@0.213.0/front_matter/yaml.ts"
+    },
     "tasks": {
         "dev": "deno run --allow-net --allow-read --watch src/main.ts",
         "lint": "deno lint src",
