@@ -1,13 +1,7 @@
-import { homeTmpl } from '../templates/home.ts'
+import { homeTmpl } from "../templates/pages/home.ts";
+import { htmlResponse } from "../utilities/html.ts";
+import { recentPostsMeta } from "../utilities/posts.ts";
 
 export function homeController(): Response {
-  return new Response(
-    homeTmpl(),
-    {
-      status: 200,
-      headers: {
-        "content-type": "text/html",
-      },
-    },
-  );
+  return htmlResponse(homeTmpl(recentPostsMeta));
 }
