@@ -1,25 +1,73 @@
-import { extract } from "frontmatter";
+import Markdoc from '@markdoc/markdoc'
+import yaml from 'js-yaml'
+
 import { PostMeta } from "../types.ts";
 
-const postsPath = "posts";
-const readPosts = Deno.readDir(postsPath);
-const extensionLength = 3;
-
-const postsMeta: PostMeta[] = [];
-
-for await (const p of readPosts) {
-  const data = await Deno.readTextFile(`${postsPath}/${p.name}`);
-
-  const meta = extract(data);
-
-  postsMeta.push({
-    slug: p.name.slice(0, p.name.length - extensionLength),
-    title: meta.attrs.title as string,
-    date: meta.attrs.date as Date,
-  });
+export enum Sort {
+  asc = 'asc',
+  desc = 'desc',
 }
 
-postsMeta.sort((a, b) => b.date.getTime() - a.date.getTime());
+class PostsCache {
+  meta: PostMeta[] = []
+  posts: Map<string, string> = new Map()
 
-export const recentPostsMeta = postsMeta.slice(0, 5);
-export { postsMeta };
+  ascSortedMeta?: PostMeta[]
+  descSortedMeta?: PostMeta[]
+
+  recentMeta?: PostMeta[]
+
+  constructor() {
+    this.init()
+  }
+
+  async init() {
+    const postsPath = "posts";
+    const readPosts = Deno.readDir(postsPath);
+    const extension = ".md";
+
+    for await (const p of readPosts) {
+      const rawText = await Deno.readTextFile(`${postsPath}/${p.name}`);
+      const slug = p.name.slice(0, p.name.length - extension.length);
+
+      const ast = Markdoc.parse(rawText)
+      const content = Markdoc.transform(ast) // TODO: syntax highlighting
+      const html = Markdoc.renderers.html(content)
+
+      const meta = {
+        ...yaml.load(ast.attributes.frontmatter),
+        slug
+      }
+
+      this.meta.push(meta)
+      this.posts.set(slug, html)
+    }
+  }
+
+  getPost(slug: string) {
+    return this.posts.get(slug)
+  }
+
+  getSortedByDateMeta(sort: Sort = Sort.desc) {
+    if (sort === Sort.asc) {
+      if (this.ascSortedMeta) return this.ascSortedMeta
+
+      this.ascSortedMeta = structuredClone(this.meta) as PostMeta[]
+      return this.ascSortedMeta.sort((a, b) => a.date.getTime() - b.date.getTime())
+    } else {
+      if (this.descSortedMeta) return this.descSortedMeta
+
+      this.descSortedMeta = structuredClone(this.meta) as PostMeta[]
+      return this.descSortedMeta.sort((a, b) => b.date.getTime() - a.date.getTime())
+    }
+  }
+
+  getRecentMeta() {
+    if (this.recentMeta) return this.recentMeta
+    this.recentMeta = this.getSortedByDateMeta().slice(0, 5)
+
+    return this.recentMeta
+  }
+}
+
+export const postsCache = new PostsCache()

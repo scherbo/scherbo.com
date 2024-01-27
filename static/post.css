@@ -1,0 +1,40 @@
+.post h1 {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 5rem;
+}
+
+.post h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-top: 4rem;
+  margin-bottom: 2.5rem;
+}
+
+.post h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 2rem;
+}
+
+.post p {
+  font-size: 1.6rem;
+  color: var(--text-main);
+  line-height: 1.75;
+  margin-bottom: 2rem;
+}
+
+.post pre {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+  padding-left: 3.5rem;
+  padding-right: 3.5rem;
+  font-size: 1.6rem;
+  border-radius: 1.5rem;
+  margin-bottom: 2rem;
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+}

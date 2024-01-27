@@ -9,6 +9,6 @@ app.serveStatic("/static");
 
 app.get("/", homeController);
 app.get("/posts", postsController);
-app.get("/posts/:id", postController);
+app.get("/posts/:slug", postController);
 
 Deno.serve(app.handle);
