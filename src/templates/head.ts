@@ -1,4 +1,5 @@
 import { html } from "../utilities/html.ts";
+import { styles } from '../utilities/bundleStyles.ts';
 
 interface Head {
   title: string;
@@ -16,11 +17,9 @@ export function headTmpl(props: Head) {
       <meta name="description" content="${props.description}">
 
       <!-- styles -->
-      <link href="/static/main.css" rel="stylesheet" />
-
-      <!-- font -->
-      <link rel="preconnect" href="https://rsms.me/">
-      <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+      <style>
+        ${styles}
+      </style>
     </head> 
   `;
 }

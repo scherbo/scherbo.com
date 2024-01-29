@@ -6,8 +6,8 @@ import { layoutTmpl } from "../layout.ts";
 
 export function homeTmpl(recentPosts: PostMeta[]) {
   const content = html`
-    <main class="container">
-      <div class="mb-12rem">
+    <main class="container mb-auto">
+      <div class="mb-12">
         <h2 class="text-xl text-main text-semibold mb-sm">Hey! I'm Sergey Scherbo.</h2>
         <h2 class="text-xl text-main text-semibold">And I do web stuff 🕸️</h2>
       </div>
