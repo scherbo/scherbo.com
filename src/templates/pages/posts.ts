@@ -6,7 +6,7 @@ import { layoutTmpl } from "../layout.ts";
 
 export function postsTmpl(postsMeta: PostMeta[]) {
   const content = html`
-    <main class="container">
+    <main class="container mb-auto">
       <div>
         <h2 class="text-xl text-main text-semibold mb-lg">All posts</h2>
 

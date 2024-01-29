@@ -8,7 +8,7 @@ const linkedinUrl = "https://www.linkedin.com/in/sergey-scherbo";
 
 export function footerTmpl() {
   return html`
-    <footer class="text-center mt-auto pb-xl">
+    <footer class="text-center mt-7.5 mb-7.5">
       <div class="flex justify-center gap-x-md mb-md">
         <a href="${githubUrl}" target="_blank" class="text-sm text-secondary">${
     githubIconTmpl(35, 35, "fill-secondary")

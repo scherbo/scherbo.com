@@ -5,7 +5,7 @@ import { sunIconTmpl } from "./icons/sun.ts";
 
 export function headerTmpl() {
   return html`
-    <header class="container container-wide flex justify-between py-lg mb-15rem">
+    <header class="container container-wide flex justify-between py-lg mb-15">
       <!-- logo -->
       <a href="/">
         ${houseIconTmpl(35, 35, "fill-main")}

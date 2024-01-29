@@ -11,10 +11,6 @@
   --danger: #E74C3C;
 }
 
-@supports (font-variation-settings: normal) {
-  :root { font-family: InterVariable, sans-serif; }
-}
-
 :root[data-theme='dark'] {
   --bg-main: #131418;
   --text-main: #fff;

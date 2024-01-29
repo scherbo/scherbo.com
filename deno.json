@@ -1,10 +1,11 @@
 {
     "imports": {
         "@markdoc/markdoc": "npm:@markdoc/markdoc",
-        "js-yaml": "npm:js-yaml"
+        "js-yaml": "npm:js-yaml",
+        "lightningcss": "npm:lightningcss"
     },
     "tasks": {
-        "dev": "deno run --allow-net --allow-read --watch src/main.ts",
+        "dev": "deno run --allow-net --allow-read --allow-ffi --watch src/main.ts",
         "lint": "deno lint src",
         "fmt": "deno fmt src"
     }
