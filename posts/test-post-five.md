@@ -18,6 +18,8 @@ Mauris faucibus laoreet ullamcorper. Duis et urna non ligula facilisis suscipit.
 Quisque rhoncus tincidunt enim eu consequat. Proin ut ante orci. Pellentesque in ante augue. Praesent gravida cursus dolor, in iaculis lectus accumsan a. Suspendisse potenti. Sed laoreet posuere pulvinar. Proin ac eros eu purus fringilla placerat eu id arcu.
 
 ```ts
+// person.ts
+
 function Person(name: string) {
   this.name = name
 }

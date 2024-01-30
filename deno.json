@@ -1,8 +1,14 @@
 {
     "imports": {
-        "@markdoc/markdoc": "npm:@markdoc/markdoc",
-        "js-yaml": "npm:js-yaml",
-        "lightningcss": "npm:lightningcss"
+        "lightningcss": "npm:lightningcss",
+        "hljs": "npm:highlight.js/lib/core",
+        "hljs-js": "npm:highlight.js/lib/languages/javascript",
+        "hljs-ts": "npm:highlight.js/lib/languages/typescript",
+        "hljs-xml": "npm:highlight.js/lib/languages/xml",
+        "hljs-css": "npm:highlight.js/lib/languages/css",
+        "gray-matter": "npm:gray-matter",
+        "marked": "npm:marked",
+        "marked-highlight": "npm:marked-highlight"
     },
     "tasks": {
         "dev": "deno run --allow-net --allow-read --allow-ffi --watch src/main.ts",

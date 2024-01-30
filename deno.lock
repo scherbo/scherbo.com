@@ -2,45 +2,60 @@
   "version": "3",
   "packages": {
     "specifiers": {
-      "npm:@markdoc/markdoc": "npm:@markdoc/markdoc@0.4.0",
-      "npm:js-yaml": "npm:js-yaml@4.1.0",
-      "npm:lightningcss": "npm:lightningcss@1.23.0"
+      "npm:gray-matter": "npm:gray-matter@4.0.3",
+      "npm:highlight.js": "npm:highlight.js@11.9.0",
+      "npm:lightningcss": "npm:lightningcss@1.23.0",
+      "npm:marked": "npm:marked@11.2.0",
+      "npm:marked-highlight": "npm:marked-highlight@2.1.0_marked@11.2.0"
     },
     "npm": {
-      "@markdoc/markdoc@0.4.0": {
-        "integrity": "sha512-fSh4P3Y4E7oaKYc2oNzSIJVPDto7SMzAuQN1Iyx53UxzleA6QzRdNWRxmiPqtVDaDi5dELd2yICoG91csrGrAw==",
+      "argparse@1.0.10": {
+        "integrity": "sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==",
         "dependencies": {
-          "@types/markdown-it": "@types/markdown-it@12.2.3"
+          "sprintf-js": "sprintf-js@1.0.3"
         }
-      },
-      "@types/linkify-it@3.0.5": {
-        "integrity": "sha512-yg6E+u0/+Zjva+buc3EIb+29XEg4wltq7cSmd4Uc2EE/1nUVmxyzpX6gUXD0V8jIrG0r7YeOGVIbYRkxeooCtw==",
-        "dependencies": {}
-      },
-      "@types/markdown-it@12.2.3": {
-        "integrity": "sha512-GKMHFfv3458yYy+v/N8gjufHO6MSZKCOXpZc5GXIWWy8uldwfmPn98vp81gZ5f9SVw8YYBctgfJ22a2d7AOMeQ==",
-        "dependencies": {
-          "@types/linkify-it": "@types/linkify-it@3.0.5",
-          "@types/mdurl": "@types/mdurl@1.0.5"
-        }
-      },
-      "@types/mdurl@1.0.5": {
-        "integrity": "sha512-6L6VymKTzYSrEf4Nev4Xa1LCHKrlTlYCBMTlQKFuddo1CvQcE52I0mwfOJayueUC7MJuXOeHTcIU683lzd0cUA==",
-        "dependencies": {}
-      },
-      "argparse@2.0.1": {
-        "integrity": "sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==",
-        "dependencies": {}
       },
       "detect-libc@1.0.3": {
         "integrity": "sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==",
         "dependencies": {}
       },
-      "js-yaml@4.1.0": {
-        "integrity": "sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==",
+      "esprima@4.0.1": {
+        "integrity": "sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==",
+        "dependencies": {}
+      },
+      "extend-shallow@2.0.1": {
+        "integrity": "sha512-zCnTtlxNoAiDc3gqY2aYAWFx7XWWiasuF2K8Me5WbN8otHKTUKBwjPtNpRs/rbUZm7KxWAaNj7P1a/p52GbVug==",
         "dependencies": {
-          "argparse": "argparse@2.0.1"
+          "is-extendable": "is-extendable@0.1.1"
         }
+      },
+      "gray-matter@4.0.3": {
+        "integrity": "sha512-5v6yZd4JK3eMI3FqqCouswVqwugaA9r4dNZB1wwcmrD02QkV5H0y7XBQW8QwQqEaZY1pM9aqORSORhJRdNK44Q==",
+        "dependencies": {
+          "js-yaml": "js-yaml@3.14.1",
+          "kind-of": "kind-of@6.0.3",
+          "section-matter": "section-matter@1.0.0",
+          "strip-bom-string": "strip-bom-string@1.0.0"
+        }
+      },
+      "highlight.js@11.9.0": {
+        "integrity": "sha512-fJ7cW7fQGCYAkgv4CPfwFHrfd/cLS4Hau96JuJ+ZTOWhjnhoeN1ub1tFmALm/+lW5z4WCAuAV9bm05AP0mS6Gw==",
+        "dependencies": {}
+      },
+      "is-extendable@0.1.1": {
+        "integrity": "sha512-5BMULNob1vgFX6EjQw5izWDxrecWK9AM72rugNr0TFldMOi0fj6Jk+zeKIt0xGj4cEfQIJth4w3OKWOJ4f+AFw==",
+        "dependencies": {}
+      },
+      "js-yaml@3.14.1": {
+        "integrity": "sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==",
+        "dependencies": {
+          "argparse": "argparse@1.0.10",
+          "esprima": "esprima@4.0.1"
+        }
+      },
+      "kind-of@6.0.3": {
+        "integrity": "sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==",
+        "dependencies": {}
       },
       "lightningcss-darwin-arm64@1.23.0": {
         "integrity": "sha512-kl4Pk3Q2lnE6AJ7Qaij47KNEfY2/UXRZBT/zqGA24B8qwkgllr/j7rclKOf1axcslNXvvUdztjo4Xqh39Yq1aA==",
@@ -92,6 +107,31 @@
           "lightningcss-linux-x64-musl": "lightningcss-linux-x64-musl@1.23.0",
           "lightningcss-win32-x64-msvc": "lightningcss-win32-x64-msvc@1.23.0"
         }
+      },
+      "marked-highlight@2.1.0_marked@11.2.0": {
+        "integrity": "sha512-peBvgGZZqUw074Vy/N8Y7/6JQhSnR54/T0Ozq2/fAIBzcYfVfExFdQJptIhQxreR1elpwvJRrqhp6S/Prk8prA==",
+        "dependencies": {
+          "marked": "marked@11.2.0"
+        }
+      },
+      "marked@11.2.0": {
+        "integrity": "sha512-HR0m3bvu0jAPYiIvLUUQtdg1g6D247//lvcekpHO1WMvbwDlwSkZAX9Lw4F4YHE1T0HaaNve0tuAWuV1UJ6vtw==",
+        "dependencies": {}
+      },
+      "section-matter@1.0.0": {
+        "integrity": "sha512-vfD3pmTzGpufjScBh50YHKzEu2lxBWhVEHsNGoEXmCmn2hKGfeNLYMzCJpe8cD7gqX7TJluOVpBkAequ6dgMmA==",
+        "dependencies": {
+          "extend-shallow": "extend-shallow@2.0.1",
+          "kind-of": "kind-of@6.0.3"
+        }
+      },
+      "sprintf-js@1.0.3": {
+        "integrity": "sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==",
+        "dependencies": {}
+      },
+      "strip-bom-string@1.0.0": {
+        "integrity": "sha512-uCC2VHvQRYu+lMh4My/sFNmF2klFymLX1wHJeXnbEJERpV/ZsVuonzerjfrGpIGF7LBVa1O7i9kjiWvJiFck8g==",
+        "dependencies": {}
       }
     }
   },
