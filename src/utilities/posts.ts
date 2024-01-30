@@ -1,7 +1,7 @@
-import Markdoc from '@markdoc/markdoc'
-import yaml from 'js-yaml'
+import matter from 'gray-matter'
 
 import { PostMeta } from "../types.ts";
+import { enhancedMarkdownParser } from "./enhancedMarkdownParser.ts";
 
 export enum Sort {
   asc = 'asc',
@@ -27,17 +27,18 @@ class PostsCache {
     const extension = ".md";
 
     for await (const p of readPosts) {
-      const rawText = await Deno.readTextFile(`${postsPath}/${p.name}`);
+      const raw = await Deno.readTextFile(`${postsPath}/${p.name}`);
       const slug = p.name.slice(0, p.name.length - extension.length);
 
-      const ast = Markdoc.parse(rawText)
-      const content = Markdoc.transform(ast) // TODO: syntax highlighting
-      const html = Markdoc.renderers.html(content)
+      const { content, data } = matter(raw)
 
       const meta = {
-        ...yaml.load(ast.attributes.frontmatter),
-        slug
+        date: data.date,
+        title: data.title,
+        slug,
       }
+
+      const html = enhancedMarkdownParser(content) as string
 
       this.meta.push(meta)
       this.posts.set(slug, html)
