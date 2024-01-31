@@ -26,6 +26,9 @@
   font-size: 1.6rem;
   color: var(--text-main);
   line-height: 1.75;
+}
+
+.post p:not(:last-of-type) {
   margin-bottom: 2rem;
 }
 
@@ -34,4 +37,45 @@
   font-size: 1.6rem;
   border-radius: 1.5rem;
   background-color: #1D1E25;
+}
+
+.post .notice {
+  padding: 3.5rem;
+  margin-bottom: 2rem;
+  border-left-width: 5px;
+  border-radius: 1.5rem;
+  border-left-style: solid;
+  background-color: var(--bg-secondary);
+}
+
+.post .notice.info {
+  border-color: var(--info);
+}
+
+.post .notice.info h3 {
+  color: var(--info);
+}
+
+.post .notice.warning {
+  border-color: var(--warning);
+}
+
+.post .notice.warning h3 {
+  color: var(--warning);
+}
+
+.post .notice.success {
+  border-color: var(--success);
+}
+
+.post .notice.success h3 {
+  color: var(--success);
+}
+
+.post .notice.danger {
+  border-color: var(--danger);
+}
+
+.post .notice.danger h3 {
+  color: var(--danger);
 }
