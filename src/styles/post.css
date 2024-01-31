@@ -79,7 +79,3 @@
 .post .notice.danger h3 {
   color: var(--danger);
 }
-
-/* .post .notice p:last-of-type {
-  margin-bottom: unset;
-} */
