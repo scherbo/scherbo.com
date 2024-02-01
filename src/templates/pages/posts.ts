@@ -1,3 +1,4 @@
+import { NavLink } from "../../types.ts";
 import { PostMeta } from "../../types.ts";
 import { html } from "../../utilities/html.ts";
 import { stringifyDate } from "../../utilities/stringifyDate.ts";
@@ -31,5 +32,6 @@ export function postsTmpl(postsMeta: PostMeta[]) {
     title: "All posts",
     description: "All posts on Scherbo.com",
     content,
+    activeNavLink: NavLink.posts,
   });
 }
