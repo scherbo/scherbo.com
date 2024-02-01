@@ -18,6 +18,10 @@
   color: var(--text-main);
 }
 
+.hover\:text-main:hover {
+  color: var(--text-main);
+}
+
 .text-secondary {
   color: var(--text-secondary);
 }

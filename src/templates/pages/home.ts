@@ -1,3 +1,4 @@
+import { NavLink } from "../../types.ts";
 import { PostMeta } from "../../types.ts";
 import { html } from "../../utilities/html.ts";
 import { stringifyDate } from "../../utilities/stringifyDate.ts";
@@ -38,6 +39,7 @@ export function homeTmpl(recentPosts: PostMeta[]) {
       title: "Sergey Scherbo",
       description: "I write about web development",
       content,
+      activeNavLink: NavLink.home,
     })
   }
   `;

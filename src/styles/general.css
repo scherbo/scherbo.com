@@ -52,6 +52,18 @@ hr {
   fill: var(--text-main);
 }
 
+.hover\:fill-main:hover {
+  fill: var(--text-main);
+}
+
 .fill-secondary {
   fill: var(--text-secondary);
+}
+
+.theme-switcher {
+  padding: 0;
+  border: unset;
+  font-size: unset;
+  background-color: transparent;
+  cursor: pointer;
 }
