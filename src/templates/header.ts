@@ -2,6 +2,7 @@ import { NavLink } from "../types.ts";
 import { html } from "../utilities/html.ts";
 
 import { houseIconTmpl } from "./icons/house.ts";
+import { moonIconTmpl } from "./icons/moon.ts";
 import { sunIconTmpl } from "./icons/sun.ts";
 
 interface HeaderProps {
@@ -33,9 +34,15 @@ export function navTmpl({ activeNavLink }: NavProps) {
     <nav class="flex align-center gap-x-lg">
       ${navLinkTmpl({ href: '/', text: 'Home', active: activeNavLink && activeNavLink === NavLink.home })}
       ${navLinkTmpl({ href: '/posts', text: 'Posts', active: activeNavLink && activeNavLink === NavLink.posts })}
-      <button class="theme-switcher">
+      <button class="theme-switcher"></button>
+
+      <template id="sun-icon">
         ${sunIconTmpl({ width: 35, height: 35, classes: "fill-secondary" })}
-      </button>
+      </template>
+
+      <template id="moon-icon">
+        ${moonIconTmpl({ width: 35, height: 35, classes: "fill-secondary" })}
+      </template>
     </nav>
   `
 }
@@ -48,6 +55,6 @@ interface NavLinkProps {
 
 export function navLinkTmpl({ href, text, active }: NavLinkProps) {
   return html`
-    <a href="${href}" class="${active ? 'text-main' : 'text-secondary'} hover:text-main text-sm">${text}</a>
+    <a href="${href}" class="${active ? 'text-main text-semibold' : 'text-secondary'} hover:text-main text-sm no-decoration">${text}</a>
   `
 }
