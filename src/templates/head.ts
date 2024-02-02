@@ -20,6 +20,9 @@ export function headTmpl(props: Head) {
       <style>
         ${styles}
       </style>
+
+      <!-- scripts -->
+      <script src="/static/index.js" defer></script>
     </head> 
   `;
 }

@@ -61,9 +61,17 @@ hr {
 }
 
 .theme-switcher {
+  overflow: hidden;
   padding: 0;
   border: unset;
-  font-size: unset;
+  font-size: 0;
   background-color: transparent;
   cursor: pointer;
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.theme-switcher:hover svg {
+  fill: var(--text-main);
 }
