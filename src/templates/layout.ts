@@ -9,7 +9,7 @@ interface LayoutProps {
   title: string;
   description: string;
   content: string;
-  activeNavLink?: NavLink
+  activeNavLink?: NavLink;
 }
 
 export function layoutTmpl(props: LayoutProps) {

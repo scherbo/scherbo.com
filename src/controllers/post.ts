@@ -6,12 +6,12 @@ export function postController(
   _request: Request,
   match?: Record<string, string>,
 ): Response {
-  const postContent = postsCache.getPost(match?.slug as string)
+  const postContent = postsCache.getPost(match?.slug as string);
 
   if (postContent) {
-    return htmlResponse(postTmpl(postContent))
+    return htmlResponse(postTmpl(postContent));
   }
 
   // TODO: add proper 404 page
-  return new Response('Post not found')
+  return new Response("Post not found");
 }
