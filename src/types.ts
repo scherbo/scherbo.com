@@ -5,12 +5,12 @@ export type PostMeta = {
 };
 
 export type IconProps = {
-  width: number
-  height: number
-  classes: string
-}
+  width: number;
+  height: number;
+  classes: string;
+};
 
 export enum NavLink {
-  home = 'home',
-  posts = 'posts',
+  home = "home",
+  posts = "posts",
 }

@@ -1,5 +1,5 @@
 import { html } from "../utilities/html.ts";
-import { styles } from '../utilities/bundleStyles.ts';
+import { styles } from "../utilities/bundleStyles.ts";
 
 interface Head {
   title: string;
