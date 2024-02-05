@@ -1,6 +1,6 @@
 pre-commit:
   commands:
     fmt:
-      run: deno task fmt {staged_files} && git update-index --refresh
+      run: deno task fmt {staged_files} && git update-index --again
     lint:
       run: deno task lint {staged_files}
