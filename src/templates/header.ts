@@ -13,9 +13,9 @@ export function headerTmpl({ activeNavLink }: HeaderProps) {
   const homeActive = activeNavLink && activeNavLink === NavLink.home;
 
   return html`
-    <header class="container container-wide flex justify-between py-lg mb-15">
+    <header class="container container-wide flex justify-between py-lg mb-15" data-id="header">
       <!-- logo -->
-      <a href="/">
+      <a href="/" data-id="home-icon">
         ${
     houseIconTmpl({
       width: 35,
@@ -37,12 +37,13 @@ interface NavProps {
 
 export function navTmpl({ activeNavLink }: NavProps) {
   return html`
-    <nav class="flex align-center gap-x-lg">
+    <nav class="flex align-center gap-x-lg" data-id="navigation">
       ${
     navLinkTmpl({
       href: "/",
       text: "Home",
       active: activeNavLink && activeNavLink === NavLink.home,
+      dataID: "home-link",
     })
   }
       ${
@@ -50,9 +51,10 @@ export function navTmpl({ activeNavLink }: NavProps) {
       href: "/posts",
       text: "Posts",
       active: activeNavLink && activeNavLink === NavLink.posts,
+      dataID: "posts-link",
     })
   }
-      <button class="theme-switcher"></button>
+      <button class="theme-switcher" data-id="theme-switcher"></button>
 
       <template id="sun-icon">
         ${sunIconTmpl({ width: 35, height: 35, classes: "fill-secondary" })}
@@ -69,11 +71,12 @@ interface NavLinkProps {
   href: string;
   text: string;
   active?: boolean;
+  dataID?: string;
 }
 
-export function navLinkTmpl({ href, text, active }: NavLinkProps) {
+export function navLinkTmpl({ href, text, active, dataID }: NavLinkProps) {
   return html`
-    <a href="${href}" class="${
+    <a href="${href}" data-id="${dataID}" class="${
     active ? "text-main text-semibold" : "text-secondary"
   } hover:text-main text-sm no-decoration">${text}</a>
   `;

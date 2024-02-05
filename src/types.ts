@@ -14,3 +14,8 @@ export enum NavLink {
   home = "home",
   posts = "posts",
 }
+
+export enum Sort {
+  asc = "asc",
+  desc = "desc",
+}
