@@ -1,18 +1,19 @@
 {
-    "imports": {
-        "lightningcss": "npm:lightningcss",
-        "hljs": "npm:highlight.js/lib/core",
-        "hljs-js": "npm:highlight.js/lib/languages/javascript",
-        "hljs-ts": "npm:highlight.js/lib/languages/typescript",
-        "hljs-xml": "npm:highlight.js/lib/languages/xml",
-        "hljs-css": "npm:highlight.js/lib/languages/css",
-        "gray-matter": "npm:gray-matter",
-        "marked": "npm:marked",
-        "marked-highlight": "npm:marked-highlight"
-    },
-    "tasks": {
-        "dev": "deno run --allow-net --allow-read --allow-ffi --watch src/main.ts",
-        "lint": "deno lint src",
-        "fmt": "deno fmt src"
-    }
+  "imports": {
+    "lightningcss": "npm:lightningcss@1.23.0",
+    "hljs": "npm:highlight.js/lib/core",
+    "hljs-js": "npm:highlight.js/lib/languages/javascript",
+    "hljs-ts": "npm:highlight.js/lib/languages/typescript",
+    "hljs-xml": "npm:highlight.js/lib/languages/xml",
+    "hljs-css": "npm:highlight.js/lib/languages/css",
+    "gray-matter": "npm:gray-matter",
+    "marked": "npm:marked",
+    "marked-highlight": "npm:marked-highlight"
+  },
+  "tasks": {
+    "dev": "deno run --allow-net --allow-read --allow-ffi --watch src/main.ts",
+    "lint": "deno lint src",
+    "fmt": "deno fmt src",
+    "test": "deno test -A"
+  }
 }
