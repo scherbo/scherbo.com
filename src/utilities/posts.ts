@@ -1,12 +1,7 @@
 import matter from "gray-matter";
 
-import { PostMeta } from "../types.ts";
+import { PostMeta, Sort } from "../types.ts";
 import { enhancedMarkdownParser } from "./enhancedMarkdownParser.ts";
-
-export enum Sort {
-  asc = "asc",
-  desc = "desc",
-}
 
 class PostsCache {
   meta: PostMeta[] = [];

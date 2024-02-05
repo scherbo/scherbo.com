@@ -4,7 +4,7 @@
     "specifiers": {
       "npm:gray-matter": "npm:gray-matter@4.0.3",
       "npm:highlight.js": "npm:highlight.js@11.9.0",
-      "npm:lightningcss": "npm:lightningcss@1.23.0",
+      "npm:lightningcss@1.23.0": "npm:lightningcss@1.23.0",
       "npm:marked": "npm:marked@11.2.0",
       "npm:marked-highlight": "npm:marked-highlight@2.1.0_marked@11.2.0"
     },

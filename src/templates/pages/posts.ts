@@ -9,14 +9,14 @@ export function postsTmpl(postsMeta: PostMeta[]) {
   const content = html`
     <main class="container mb-auto">
       <div>
-        <h2 class="text-xl text-main text-semibold mb-lg">All posts</h2>
+        <h2 class="text-xl text-main text-semibold mb-lg" data-id="heading-secondary">All posts</h2>
 
         <ul>
           ${
     postsMeta.map((post, i) =>
       html`
             <li class="flex justify-between">
-              <a href="/posts/${post.slug}" class="text-sm text-main">${post.title}</a>
+              <a href="/posts/${post.slug}" data-id="link-${i}" class="text-sm text-main">${post.title}</a>
               <p class="text-sm text-secondary">${stringifyDate(post.date)}</p>
             </li>
             ${i !== postsMeta.length - 1 ? html`<hr class="my-md" />` : ""}
