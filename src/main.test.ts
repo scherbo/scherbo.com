@@ -15,6 +15,8 @@ import { postTmpl } from "./templates/pages/post.ts";
 import { mockPostsCache } from "./mocks/posts.ts";
 import { documentFromResponse } from "./utilities/documentFromResponse.ts";
 
+console.log("testing pre-push hook");
+
 function mockHomeController() {
   const recenMeta = mockPostsCache.getRecentMeta();
   return htmlResponse(homeTmpl(recenMeta));
