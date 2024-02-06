@@ -1,4 +1,5 @@
 import { postTmpl } from "../templates/pages/post.ts";
+import { notFoundTmpl } from "../templates/pages/notFound.ts";
 import { htmlResponse } from "../utilities/html.ts";
 import { postsCache } from "../utilities/posts.ts";
 
@@ -12,6 +13,5 @@ export function postController(
     return htmlResponse(postTmpl(postContent));
   }
 
-  // TODO: add proper 404 page
-  return new Response("Post not found");
+  return htmlResponse(notFoundTmpl(undefined, `Post doesn't exist`), 404);
 }

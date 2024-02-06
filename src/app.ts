@@ -1,5 +1,7 @@
 import { serveDir } from "https://deno.land/std@0.212.0/http/file_server.ts";
 import { matchRoute } from "./utilities/matchRoute.ts";
+import { htmlResponse } from "./utilities/html.ts";
+import { notFoundTmpl } from "./templates/pages/notFound.ts";
 
 type RegisteredRoute = {
   pathToMatch: string;
@@ -25,7 +27,7 @@ export class App {
       }
     }
 
-    return new Response("Page not found", { status: 404 });
+    return htmlResponse(notFoundTmpl(), 404);
   };
 
   get = (

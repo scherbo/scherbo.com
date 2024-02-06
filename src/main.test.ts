@@ -11,6 +11,7 @@ import { htmlResponse } from "./utilities/html.ts";
 import { homeTmpl } from "./templates/pages/home.ts";
 import { postsTmpl } from "./templates/pages/posts.ts";
 import { postTmpl } from "./templates/pages/post.ts";
+import { notFoundTmpl } from "./templates/pages/notFound.ts";
 
 import { mockPostsCache } from "./mocks/posts.ts";
 import { documentFromResponse } from "./utilities/documentFromResponse.ts";
@@ -32,8 +33,7 @@ function mockPostController(_request: Request, match?: Record<string, string>) {
     return htmlResponse(postTmpl(postContent));
   }
 
-  // TODO: add proper 404 page
-  return new Response("Post not found");
+  return htmlResponse(notFoundTmpl(undefined, `Post doesn't exist`), 404);
 }
 
 const app = new App();
@@ -153,5 +153,72 @@ describe("pages", () => {
     const heading = document.querySelector("h1");
     assertExists(heading, "Heading does not exist");
     assertEquals(heading.textContent, "Dumbbell wants to set things right.");
+  });
+
+  it("not found page is rendered", async () => {
+    const req = new Request("https://localhost:8000/asdf", {
+      method: "GET",
+    });
+
+    const response = await app.handle(req);
+    const document = await documentFromResponse(response);
+
+    if (!document) throw Error("there is a problem with Not-found page");
+
+    // shared templates are rendered correctly for the Not-found page
+    assertSharedTemplates(document);
+
+    const notFoundContent = document.querySelector(".not-found");
+
+    if (!notFoundContent) {
+      throw Error("there is a problem with Not-found-content page");
+    }
+
+    const heading = notFoundContent.querySelector("h2");
+    assertExists(heading, "Heading does not exist");
+    assertEquals(heading.textContent, "Not found");
+
+    const paragraph = notFoundContent.querySelector("p");
+    assertExists(paragraph, "Paragraph does not exist");
+    assertEquals(
+      paragraph.textContent,
+      "You are looking for a page that doesn't exist...",
+    );
+
+    const homeLink = notFoundContent.querySelector("a");
+    assertExists(homeLink, "Home link does not exist");
+    assertEquals(homeLink.textContent, "Home page");
+  });
+
+  it("not found post page is rendered", async () => {
+    const req = new Request("https://localhost:8000/posts/asdf", {
+      method: "GET",
+    });
+
+    const response = await app.handle(req);
+    const document = await documentFromResponse(response);
+
+    if (!document) throw Error("there is a problem with Not-found-post page");
+
+    // shared templates are rendered correctly for the Not-found-post page
+    assertSharedTemplates(document);
+
+    const notFoundContent = document.querySelector(".not-found");
+
+    if (!notFoundContent) {
+      throw Error("there is a problem with Not-found-content post page");
+    }
+
+    const heading = notFoundContent.querySelector("h2");
+    assertExists(heading, "Heading does not exist");
+    assertEquals(heading.textContent, "Not found");
+
+    const paragraph = notFoundContent.querySelector("p");
+    assertExists(paragraph, "Paragraph does not exist");
+    assertEquals(paragraph.textContent, "Post doesn't exist");
+
+    const homeLink = notFoundContent.querySelector("a");
+    assertExists(homeLink, "Home link does not exist");
+    assertEquals(homeLink.textContent, "Home page");
   });
 });

@@ -1,8 +1,8 @@
 export const html = String.raw;
 
-export function htmlResponse(htmlTmpl: string): Response {
+export function htmlResponse(htmlTmpl: string, status = 200): Response {
   return new Response(htmlTmpl, {
-    status: 200,
+    status,
     headers: {
       "content-type": "text/html",
     },
