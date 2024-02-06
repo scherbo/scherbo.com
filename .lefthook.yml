@@ -4,3 +4,7 @@ pre-commit:
       run: deno task fmt {staged_files} && git update-index --again
     lint:
       run: deno task lint {staged_files}
+pre-push:
+  commands:
+    test:
+      run: deno task test

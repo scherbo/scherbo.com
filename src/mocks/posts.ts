@@ -1,4 +1,5 @@
 import matter from "gray-matter";
+import { Marked } from "marked";
 import { PostMeta } from "../types.ts";
 import { Sort } from "../types.ts";
 
@@ -212,6 +213,8 @@ let fruits: string[] = ['apple', 'orange', 'banana']
 Aenean aliquet augue vitae consectetur vestibulum. Morbi quis nulla aliquet, blandit arcu sed, egestas leo. Duis tempus urna a urna varius euismod. Praesent ornare sodales odio id vulputate. Donec sodales scelerisque ex. Fusce efficitur viverra est a vestibulum. Sed tincidunt a est ultrices venenatis. Suspendisse suscipit scelerisque dui quis luctus. Praesent at arcu mi. Cras ac tempor est, non placerat sem. Nulla laoreet hendrerit sodales. Integer ut justo molestie, egestas orci vitae, laoreet sapien. Vivamus ullamcorper, metus tempor ullamcorper feugiat, lectus tortor consectetur erat, in cursus nunc enim maximus ante. Proin quam mauris, iaculis id tempus quis, faucibus id mi. Nulla vestibulum egestas leo in fringilla.
 `;
 
+const mdParser = new Marked();
+
 const mockPosts = [
   { slug: "test-post-one", content: firstMockPost },
   { slug: "test-post-two", content: secondMockPost },
@@ -239,8 +242,10 @@ class MockPostsCache {
       const { content, data } = matter(mockPost.content);
       const meta = { date: data.date, title: data.title, slug: mockPost.slug };
 
+      const html = mdParser.parse(content) as string;
+
       this.meta.push(meta);
-      this.posts.set(mockPost.slug, content);
+      this.posts.set(mockPost.slug, html);
     }
   }
 
