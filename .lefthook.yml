@@ -5,6 +5,7 @@ pre-commit:
     lint:
       run: deno task lint {staged_files}
 pre-push:
+  follow: true
   commands:
     test:
       run: deno task test
