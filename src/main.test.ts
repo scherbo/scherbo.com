@@ -1,6 +1,7 @@
 import { Document } from "https://deno.land/x/deno_dom@v0.1.45/deno-dom-wasm.ts";
 import { describe, it } from "https://deno.land/std@0.214.0/testing/bdd.ts";
 import {
+  assertEquals,
   assertExists,
   assertThrows,
 } from "https://deno.land/std@0.212.0/assert/mod.ts";
@@ -78,7 +79,7 @@ function assertSharedTemplates(document: Document) {
 }
 
 describe("pages", () => {
-  it("home page should only render 5 most recent posts links", async () => {
+  it("home page is rendered correctly", async () => {
     const req = new Request("https://localhost:8000", {
       method: "GET",
     });
@@ -99,6 +100,7 @@ describe("pages", () => {
     );
     assertExists(headingSecondary, "Secondary heading does not exist");
 
+    // only 5 most recent post links are rendered
     const firstRecentLink = document.querySelector('[data-id="recent-link-0"]');
     assertExists(firstRecentLink, "First most recent link does not exist");
 
@@ -109,7 +111,7 @@ describe("pages", () => {
     assertThrows(() => assertExists(nonExistentLink), "Link should not exist");
   });
 
-  it("posts page renders all post links", async () => {
+  it("posts page is rendered correctly", async () => {
     const req = new Request("https://localhost:8000/posts", {
       method: "GET",
     });
@@ -127,6 +129,7 @@ describe("pages", () => {
     );
     assertExists(headingSecondary, "Secondary heading does not exist");
 
+    // all post links are rendered
     const mostRecentLink = document.querySelector('[data-id="link-0"]');
     assertExists(mostRecentLink, "Most recent link does not exist");
 
@@ -134,6 +137,21 @@ describe("pages", () => {
     assertExists(mostOldestLink, "Most oldest link does not exist");
   });
 
-  // TODO: add post page test
-  // TODO: add 404 page test
+  it("post page is rendered correctly", async () => {
+    const req = new Request("https://localhost:8000/posts/test-post-one", {
+      method: "GET",
+    });
+
+    const response = await app.handle(req);
+    const document = await documentFromResponse(response);
+
+    if (!document) throw Error("there is a problem with Test-post-one page");
+
+    // shared templates are rendered correctly for the Test-post-one page
+    assertSharedTemplates(document);
+
+    const heading = document.querySelector("h1");
+    assertExists(heading, "Heading does not exist");
+    assertEquals(heading.textContent, "Dumbbell wants to set things right.");
+  });
 });
