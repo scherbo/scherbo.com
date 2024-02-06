@@ -14,6 +14,6 @@
     "dev": "deno run --allow-net --allow-read --allow-ffi --watch src/main.ts",
     "lint": "deno lint src",
     "fmt": "deno fmt src",
-    "test": "deno test -A"
+    "test": "deno test src -A"
   }
 }
