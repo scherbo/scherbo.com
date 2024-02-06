@@ -7,4 +7,5 @@ pre-commit:
 pre-push:
   commands:
     test:
-      run: deno task test {push_files}
+      glob: "*.test.ts"
+      run: deno test -A {all_files}
