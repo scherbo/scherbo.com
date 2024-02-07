@@ -1,0 +1,22 @@
+name: Lint
+run-name: Running format and lint commands
+on:
+  pull_request:
+    type: [opened, synchronize, reopened]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      
+      - name: Install Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Format step
+        run: "deno task fmt"
+      
+      - name: Lint step
+        run: "deno task lint"
