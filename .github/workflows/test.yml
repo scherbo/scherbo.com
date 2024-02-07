@@ -4,7 +4,7 @@ on:
   pull_request:
     type: [opened, synchronize, reopened]
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
@@ -14,5 +14,6 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
+
       - name: Test step
         run: "deno task test"
