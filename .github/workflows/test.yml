@@ -1,5 +1,5 @@
-name: Lint
-run-name: Running format and lint commands
+name: Test
+run-name: Running test command
 on:
   pull_request:
     type: [opened, synchronize, reopened]
@@ -14,8 +14,5 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
-      - name: Format step
-        run: "deno task fmt"
-      
-      - name: Lint step
-        run: "deno task lint"
+      - name: Test step
+        run: "deno task test"
