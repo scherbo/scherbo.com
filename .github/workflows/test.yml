@@ -4,11 +4,10 @@ on:
   pull_request:
     type: [opened, synchronize, reopened]
 jobs:
+  build:
+    uses: ./.github/workflows/build.yml
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Build step
-        uses: .github/actions/build.yml
-
       - name: Test step
         run: "deno task test"

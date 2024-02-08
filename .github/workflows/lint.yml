@@ -4,12 +4,11 @@ on:
   pull_request:
     type: [opened, synchronize, reopened]
 jobs:
+  build:
+    uses: ./.github/workflows/build.yml
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Build step
-        uses: .github/actions/build.yml
-
       - name: Format check step
         run: "deno task fmt-check"
       

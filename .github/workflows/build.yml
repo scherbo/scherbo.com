@@ -1,4 +1,6 @@
 name: Build (clone repo, install Deno)
+on:
+  workflow_call:
 jobs:
   build:
     runs-on: ubuntu-latest
