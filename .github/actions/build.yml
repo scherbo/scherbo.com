@@ -1,5 +1,6 @@
+name: Build (clone repo, install Deno)
 jobs:
-  setup_deno:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
