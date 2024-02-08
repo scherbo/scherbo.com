@@ -1,11 +1,10 @@
 name: Deploy
 on:
-  pull_request:
-    type: [opened, synchronize, reopened]
-
+  workflow_run:
+    workflows: [Build]
+      types: [completed]
 jobs:
   deploy:
-    needs: build
     name: Deploy
     runs-on: ubuntu-latest
 
