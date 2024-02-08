@@ -1,10 +1,10 @@
-name: Lint
-run-name: Running format and lint commands
+name: Build
+run-name: Code-quality workflow (format check, lint, test)
 on:
   pull_request:
     type: [opened, synchronize, reopened]
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
@@ -15,8 +15,11 @@ jobs:
         with:
           deno-version: v1.x
 
-      - name: Format step
-        run: "deno task fmt"
+      - name: Format check
+        run: "deno task fmt-check"
       
-      - name: Lint step
+      - name: Lint
         run: "deno task lint"
+
+      - name: Test
+        run: "deno task test"
