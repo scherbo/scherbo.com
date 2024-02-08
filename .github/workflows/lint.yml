@@ -5,7 +5,7 @@ on:
     type: [opened, synchronize, reopened]
 jobs:
   setup_deno:
-    extends: .github/actions/setup_deno.yml
+    uses: .github/actions/setup_deno.yml
   lint:
     runs-on: ubuntu-latest
     steps:
