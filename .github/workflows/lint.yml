@@ -4,19 +4,13 @@ on:
   pull_request:
     type: [opened, synchronize, reopened]
 jobs:
+  setup_deno:
+    extends: .github/actions/setup_deno.yml
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
-      
-      - name: Install Deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
-
       - name: Format step
-        run: "deno task fmt"
+        run: "deno task fmt-check"
       
       - name: Lint step
         run: "deno task lint"
