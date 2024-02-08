@@ -1,5 +1,5 @@
 name: Build
-run-name: Code-quality workflow (format check, lint, test)
+run-name: Build
 on:
   pull_request:
     type: [opened, synchronize, reopened]
