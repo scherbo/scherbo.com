@@ -11,7 +11,9 @@
     "marked-highlight": "npm:marked-highlight"
   },
   "tasks": {
-    "dev": "deno run --allow-net --allow-read --allow-ffi --watch src/main.ts",
+    "css:dev": "deno run -A src/css.ts",
+    "css:build": "deno run -A src/css.ts --build",
+    "dev": "deno run --allow-net --allow-read --allow-ffi --watch src/main.ts & deno task css:dev",
     "lint": "deno lint src",
     "fmt": "deno fmt src",
     "fmt-check": "deno fmt --check src",
