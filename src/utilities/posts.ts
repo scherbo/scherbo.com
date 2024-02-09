@@ -18,11 +18,13 @@ class PostsCache {
 
   async init() {
     const postsPath = "posts";
-    const readPosts = Deno.readDir(postsPath);
+    const readPosts = Deno.readDir(`${Deno.cwd()}/${postsPath}`);
     const extension = ".md";
 
     for await (const p of readPosts) {
-      const raw = await Deno.readTextFile(`${postsPath}/${p.name}`);
+      const raw = await Deno.readTextFile(
+        `${Deno.cwd()}/${postsPath}/${p.name}`,
+      );
       const slug = p.name.slice(0, p.name.length - extension.length);
 
       const { content, data } = matter(raw);
