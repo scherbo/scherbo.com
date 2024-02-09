@@ -3,6 +3,13 @@ import matter from "gray-matter";
 import { PostMeta, Sort } from "../types.ts";
 import { enhancedMarkdownParser } from "./enhancedMarkdownParser.ts";
 
+const d = Deno.readDir(`${Deno.cwd()}/posts`);
+console.log("=== listing files start ===");
+for await (const p of d) {
+  console.log(p);
+}
+console.log("=== listing files end ===");
+
 class PostsCache {
   meta: PostMeta[] = [];
   posts: Map<string, string> = new Map();
