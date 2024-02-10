@@ -1,5 +1,4 @@
 import { html } from "../utilities/html.ts";
-import { styles } from "../utilities/bundleStyles.ts";
 
 interface Head {
   title: string;
@@ -17,9 +16,7 @@ export function headTmpl(props: Head) {
       <meta name="description" content="${props.description}">
 
       <!-- styles -->
-      <style>
-        ${styles}
-      </style>
+      <link rel="stylesheet" href="/static/styles.css" />
 
       <!-- scripts -->
       <script src="/static/index.js" defer></script>
