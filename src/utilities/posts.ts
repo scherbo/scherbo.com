@@ -3,12 +3,12 @@ import matter from "gray-matter";
 import { PostMeta, Sort } from "../types.ts";
 import { enhancedMarkdownParser } from "./enhancedMarkdownParser.ts";
 
-const d = Deno.readDir(`${Deno.cwd()}/posts`);
-console.log("=== listing files start ===");
-for await (const p of d) {
-  console.log(p);
-}
-console.log("=== listing files end ===");
+// const d = Deno.readDir(`${Deno.cwd()}/posts`);
+// console.log("=== listing files start ===");
+// for await (const p of d) {
+//   console.log(p);
+// }
+// console.log("=== listing files end ===");
 
 class PostsCache {
   meta: PostMeta[] = [];
@@ -50,6 +50,8 @@ class PostsCache {
   }
 
   getPost(slug: string) {
+    console.log("META: ", this.meta);
+    console.log("DESC SORTED META: ", this.descSortedMeta);
     return this.posts.get(slug);
   }
 
