@@ -1,14 +1,7 @@
 import matter from "gray-matter";
 
-import { PostMeta, Sort } from "../types.ts";
+import { PostMeta } from "../types.ts";
 import { enhancedMarkdownParser } from "./enhancedMarkdownParser.ts";
-
-// const d = Deno.readDir(`${Deno.cwd()}/posts`);
-// console.log("=== listing files start ===");
-// for await (const p of d) {
-//   console.log(p);
-// }
-// console.log("=== listing files end ===");
 
 class PostsCache {
   meta: PostMeta[] = [];
@@ -47,37 +40,18 @@ class PostsCache {
       this.meta.push(meta);
       this.posts.set(slug, html);
     }
+
+    this.ascSortedMeta = this.meta.slice().sort((a, b) =>
+      a.date.getTime() - b.date.getTime()
+    );
+    this.descSortedMeta = this.meta.slice().sort((a, b) =>
+      b.date.getTime() - a.date.getTime()
+    );
+    this.recentMeta = this.descSortedMeta.slice(0, 5);
   }
 
   getPost(slug: string) {
-    console.log("META: ", this.meta);
-    console.log("DESC SORTED META: ", this.descSortedMeta);
     return this.posts.get(slug);
-  }
-
-  getSortedByDateMeta(sort: Sort = Sort.desc) {
-    if (sort === Sort.asc) {
-      if (this.ascSortedMeta) return this.ascSortedMeta;
-
-      this.ascSortedMeta = structuredClone(this.meta) as PostMeta[];
-      return this.ascSortedMeta.sort((a, b) =>
-        a.date.getTime() - b.date.getTime()
-      );
-    } else {
-      if (this.descSortedMeta) return this.descSortedMeta;
-
-      this.descSortedMeta = structuredClone(this.meta) as PostMeta[];
-      return this.descSortedMeta.sort((a, b) =>
-        b.date.getTime() - a.date.getTime()
-      );
-    }
-  }
-
-  getRecentMeta() {
-    if (this.recentMeta) return this.recentMeta;
-    this.recentMeta = this.getSortedByDateMeta().slice(0, 5);
-
-    return this.recentMeta;
   }
 }
 
