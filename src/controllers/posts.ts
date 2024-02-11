@@ -1,8 +1,12 @@
 import { postsTmpl } from "../templates/pages/posts.ts";
 import { htmlResponse } from "../utilities/html.ts";
-import { postsCache } from "../utilities/posts.ts";
+import { postsCache } from "../postsCache.ts";
 
-export function postsController(): Response {
-  const descSortedMeta = postsCache.getSortedByDateMeta();
-  return htmlResponse(postsTmpl(descSortedMeta));
+export async function postsController(): Promise<Response> {
+  const meta = await postsCache.getPostsMeta("meta");
+  const sortedMeta = meta.slice().sort((a, b) =>
+    b.date.getTime() - a.date.getTime()
+  );
+
+  return htmlResponse(postsTmpl(sortedMeta));
 }
