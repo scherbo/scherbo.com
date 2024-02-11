@@ -1,17 +1,16 @@
 import { postTmpl } from "../templates/pages/post.ts";
 import { notFoundTmpl } from "../templates/pages/notFound.ts";
 import { htmlResponse } from "../utilities/html.ts";
-import { postsCache } from "../utilities/posts.ts";
+import { postsCache } from "../postsCache.ts";
 
-export function postController(
+export async function postController(
   _request: Request,
   match?: Record<string, string>,
-): Response {
-  const postContent = postsCache.getPost(match?.slug as string);
-
-  if (postContent) {
+): Promise<Response> {
+  try {
+    const postContent = await postsCache.getPost(match?.slug as string);
     return htmlResponse(postTmpl(postContent));
+  } catch (error) {
+    return htmlResponse(notFoundTmpl(undefined, error.message), 404);
   }
-
-  return htmlResponse(notFoundTmpl(undefined, `Post doesn't exist`), 404);
 }

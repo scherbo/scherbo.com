@@ -233,5 +233,14 @@
     "https://deno.land/x/deno_dom@v0.1.45/src/dom/utils-types.ts": "96db30e3e4a75b194201bb9fa30988215da7f91b380fca6a5143e51ece2a8436",
     "https://deno.land/x/deno_dom@v0.1.45/src/dom/utils.ts": "4c6206516fb8f61f37a209c829e812c4f5a183e46d082934dd14c91bde939263",
     "https://deno.land/x/deno_dom@v0.1.45/src/parser.ts": "e06b2300d693e6ae7564e53dfa5c9a9e97fdb8c044c39c52c8b93b5d60860be3"
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:gray-matter",
+      "npm:highlight.js",
+      "npm:lightningcss@1.23.0",
+      "npm:marked",
+      "npm:marked-highlight"
+    ]
   }
 }

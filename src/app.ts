@@ -5,7 +5,10 @@ import { notFoundTmpl } from "./templates/pages/notFound.ts";
 
 type RegisteredRoute = {
   pathToMatch: string;
-  handler: (request: Request, match?: Record<string, string>) => Response;
+  handler: (
+    request: Request,
+    match?: Record<string, string>,
+  ) => Response | Promise<Response>;
 };
 
 export class App {
@@ -32,7 +35,10 @@ export class App {
 
   get = (
     pathToMatch: string,
-    handler: (request: Request, match?: Record<string, string>) => Response,
+    handler: (
+      request: Request,
+      match?: Record<string, string>,
+    ) => Response | Promise<Response>,
   ): void => {
     this.getRoutes.push({ pathToMatch, handler });
   };
