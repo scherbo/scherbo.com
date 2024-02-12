@@ -26,6 +26,6 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "tall-cobra-36"
+          project: "scherbo"
           entrypoint: "src/main.ts" # 📝 Update the entrypoint if necessary
           root: "." # 📝 Update the root if necessary
