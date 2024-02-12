@@ -3,6 +3,8 @@ import { homeController } from "./controllers/home.ts";
 import { postsController } from "./controllers/posts.ts";
 import { postController } from "./controllers/post.ts";
 
+console.log("INCLUDES --dev FLAG: ", Deno.args.includes("--dev"));
+
 const app = new App();
 
 app.serveStatic("/static");
