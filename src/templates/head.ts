@@ -1,9 +1,12 @@
 import { html } from "../utilities/html.ts";
+import { defineStyles } from "../utilities/defineStyles.ts";
 
 interface Head {
   title: string;
   description: string;
 }
+
+const styles = await defineStyles();
 
 // TODO: define other meta data
 export function headTmpl(props: Head) {
@@ -16,7 +19,7 @@ export function headTmpl(props: Head) {
       <meta name="description" content="${props.description}">
 
       <!-- styles -->
-      <link rel="stylesheet" href="/static/styles.css" />
+      ${styles}
 
       <!-- scripts -->
       <script src="/static/index.js" defer></script>
