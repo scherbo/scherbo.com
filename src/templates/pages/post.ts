@@ -1,19 +1,24 @@
+import { Meta } from "../../types.ts";
 import { html } from "../../utilities/html.ts";
 
 import { layoutTmpl } from "../layout.ts";
 
-export function postTmpl(post: string) {
+interface PostProps {
+  meta: Meta;
+  content: string;
+}
+
+export function postTmpl(props: PostProps) {
   const content = html`
     <main class="container">
       <div class="post">
-        ${post}
+        ${props.content}
       </div>
     </main>
   `;
 
   return layoutTmpl({
-    title: "All posts",
-    description: "All posts on Scherbo.com",
+    meta: props.meta,
     content,
   });
 }

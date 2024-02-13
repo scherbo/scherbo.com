@@ -36,8 +36,23 @@ export function homeTmpl(recentPosts: PostMeta[]) {
   return html`
     ${
     layoutTmpl({
-      title: "Sergey Scherbo",
-      description: "I write about web development",
+      meta: {
+        title: "Sergey Scherbo Personal Blog",
+        description:
+          "Explore insightful articles on web development and mental health. Stay updated with the latest trends and tips.",
+        keywords: [
+          "Software Development",
+          "Web Development",
+          "Web Dev",
+          "Career",
+          "Sergey Scherbo Blog",
+          "Mental Health",
+          "Articles",
+          "Posts",
+          "Trends",
+          "Tips",
+        ],
+      },
       content,
       activeNavLink: NavLink.home,
     })

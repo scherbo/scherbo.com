@@ -4,11 +4,11 @@ import { defineStyles } from "../utilities/defineStyles.ts";
 interface Head {
   title: string;
   description: string;
+  keywords: string[];
 }
 
 const styles = await defineStyles();
 
-// TODO: define other meta data
 export function headTmpl(props: Head) {
   return html`
     <head>
@@ -17,6 +17,9 @@ export function headTmpl(props: Head) {
 
       <title>${props.title}</title>
       <meta name="description" content="${props.description}">
+      <meta name="keywords" content="${props.keywords.join(", ")}">
+
+      <!-- TODO: add open graph meta data -->
 
       <!-- styles -->
       ${styles}

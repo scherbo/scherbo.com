@@ -27,10 +27,10 @@ function mockPostsController() {
 }
 
 function mockPostController(_request: Request, match?: Record<string, string>) {
-  const postContent = mockPostsCache.getPost(match?.slug as string);
+  const post = mockPostsCache.getPost(match?.slug as string);
 
-  if (postContent) {
-    return htmlResponse(postTmpl(postContent));
+  if (post) {
+    return htmlResponse(postTmpl({ meta: post.meta, content: post.content }));
   }
 
   return htmlResponse(notFoundTmpl(undefined, `Post doesn't exist`), 404);

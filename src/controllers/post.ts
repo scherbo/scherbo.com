@@ -8,8 +8,8 @@ export async function postController(
   match?: Record<string, string>,
 ): Promise<Response> {
   try {
-    const postContent = await postsCache.getPost(match?.slug as string);
-    return htmlResponse(postTmpl(postContent));
+    const { meta, content } = await postsCache.getPost(match?.slug as string);
+    return htmlResponse(postTmpl({ meta, content }));
   } catch (error) {
     return htmlResponse(notFoundTmpl(undefined, error.message), 404);
   }

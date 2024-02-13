@@ -19,8 +19,11 @@ export function notFoundTmpl(heading?: string, line?: string) {
   `;
 
   return layoutTmpl({
-    title: "Page not found",
-    description: "Page does not exist",
+    meta: {
+      title: "Page Not Found",
+      description: "Page does not exist",
+      keywords: [],
+    },
     content,
   });
 }

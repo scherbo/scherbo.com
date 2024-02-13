@@ -29,8 +29,23 @@ export function postsTmpl(postsMeta: PostMeta[]) {
   `;
 
   return layoutTmpl({
-    title: "All posts",
-    description: "All posts on Scherbo.com",
+    meta: {
+      title: "All Posts on Web Development and Mental Health by Sergey Scherbo",
+      description:
+        "Browse through a collection of insightful articles on web development and mental health.",
+      keywords: [
+        "Software Development",
+        "Web Development",
+        "Web Dev",
+        "Career",
+        "Sergey Scherbo Blog",
+        "Mental Health",
+        "Articles",
+        "Posts",
+        "Trends",
+        "Tips",
+      ],
+    },
     content,
     activeNavLink: NavLink.posts,
   });

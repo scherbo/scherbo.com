@@ -4,6 +4,7 @@ import matter from "gray-matter";
 import { Cache } from "./utilities/cache.ts";
 import { enhancedMarkdownParser } from "./utilities/enhancedMarkdownParser.ts";
 import { PostMeta } from "./types.ts";
+import { extendPostMeta } from "./utilities/extendPostMeta.ts";
 
 const postsDirName = "posts";
 const postExtension = "md";
@@ -33,10 +34,12 @@ class PostsCache extends Cache {
         `${Deno.cwd()}/${postsDirName}/${slug}.${postExtension}`,
       );
 
-      const { content } = matter(mdString);
+      const { data, content } = matter(mdString);
       const html = enhancedMarkdownParser(content) as string;
 
-      return this.setPost(slug, html);
+      const postMeta = extendPostMeta(data, slug);
+
+      return this.setPost(slug, { meta: postMeta, content: html });
     } catch (error) {
       const errorMessage = error instanceof Deno.errors.NotFound
         ? postNotFoundErrorMessage
@@ -45,7 +48,7 @@ class PostsCache extends Cache {
     }
   }
 
-  setPost(slug: string, value: string) {
+  setPost(slug: string, value: any) {
     return this.set(slug, value);
   }
 
@@ -67,11 +70,7 @@ class PostsCache extends Cache {
 
         const { data } = matter(raw);
 
-        const postMeta: PostMeta = {
-          date: data.date,
-          title: data.title,
-          slug,
-        };
+        const postMeta = extendPostMeta(data, slug);
 
         meta.push(postMeta);
       }

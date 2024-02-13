@@ -1,8 +1,7 @@
 export type PostMeta = {
   slug: string;
-  title: string;
   date: Date;
-};
+} & Meta;
 
 export type IconProps = {
   width: number;
@@ -19,3 +18,9 @@ export enum Sort {
   asc = "asc",
   desc = "desc",
 }
+
+export type Meta = {
+  title: string;
+  description: string;
+  keywords: string[];
+};
