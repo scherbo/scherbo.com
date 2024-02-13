@@ -3,7 +3,7 @@ import { htmlResponse } from "../utilities/html.ts";
 import { postsCache } from "../postsCache.ts";
 
 export async function homeController(): Promise<Response> {
-  const meta = await postsCache.getPostsMeta("meta");
+  const meta = await postsCache.getPostsMeta();
   const sortedMeta = meta.slice().sort((a, b) =>
     b.date.getTime() - a.date.getTime()
   );

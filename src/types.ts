@@ -14,13 +14,23 @@ export enum NavLink {
   posts = "posts",
 }
 
-export enum Sort {
-  asc = "asc",
-  desc = "desc",
-}
-
 export type Meta = {
   title: string;
   description: string;
   keywords: string[];
 };
+
+export type PostData = {
+  meta: PostMeta;
+  content: string;
+};
+
+export interface IPostsCache {
+  getPost(slug: string): Promise<PostData>;
+
+  setPost(slug: string, data: PostData): PostData;
+
+  getPostsMeta(key?: string): Promise<PostMeta[]>;
+
+  setPostsMeta(key: string, data: PostMeta[]): PostMeta[];
+}
