@@ -1,7 +1,7 @@
 import matter from "gray-matter";
 import { Marked } from "marked";
-import { PostMeta } from "../types.ts";
-import { Sort } from "../types.ts";
+import { PostMeta, Sort } from "../types.ts";
+import { extendPostMeta } from "../utilities/extendPostMeta.ts";
 
 export const firstMockPost = `---
 date: 2024-01-28
@@ -226,7 +226,7 @@ const mockPosts = [
 
 class MockPostsCache {
   meta: PostMeta[] = [];
-  posts: Map<string, string> = new Map();
+  posts: Map<string, { meta: PostMeta; content: string }> = new Map();
 
   ascSortedMeta?: PostMeta[] = [];
   descSortedMeta?: PostMeta[];
@@ -240,12 +240,12 @@ class MockPostsCache {
   init() {
     for (const mockPost of mockPosts) {
       const { content, data } = matter(mockPost.content);
-      const meta = { date: data.date, title: data.title, slug: mockPost.slug };
+      const postMeta = extendPostMeta(data, mockPost.slug);
 
       const html = mdParser.parse(content) as string;
 
-      this.meta.push(meta);
-      this.posts.set(mockPost.slug, html);
+      this.meta.push(postMeta);
+      this.posts.set(mockPost.slug, { meta: postMeta, content: html });
     }
   }
 
