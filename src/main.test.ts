@@ -7,42 +7,20 @@ import {
 } from "https://deno.land/std@0.212.0/assert/mod.ts";
 import { App } from "./app.ts";
 
-import { htmlResponse } from "./utilities/html.ts";
-import { homeTmpl } from "./templates/pages/home.ts";
-import { postsTmpl } from "./templates/pages/posts.ts";
-import { postTmpl } from "./templates/pages/post.ts";
-import { notFoundTmpl } from "./templates/pages/notFound.ts";
-
-import { mockPostsCache } from "./mocks/posts.ts";
 import { documentFromResponse } from "./utilities/documentFromResponse.ts";
+import { homeController } from "./controllers/home.ts";
+import { postsController } from "./controllers/posts.ts";
+import { postController } from "./controllers/post.ts";
 
-function mockHomeController() {
-  const recenMeta = mockPostsCache.getRecentMeta();
-  return htmlResponse(homeTmpl(recenMeta));
-}
-
-function mockPostsController() {
-  const descSortedMeta = mockPostsCache.getSortedByDateMeta();
-  return htmlResponse(postsTmpl(descSortedMeta));
-}
-
-function mockPostController(_request: Request, match?: Record<string, string>) {
-  const post = mockPostsCache.getPost(match?.slug as string);
-
-  if (post) {
-    return htmlResponse(postTmpl({ meta: post.meta, content: post.content }));
-  }
-
-  return htmlResponse(notFoundTmpl(undefined, `Post doesn't exist`), 404);
-}
+import { postNotFoundErrorMessage } from "./consts.ts";
 
 const app = new App();
 
 app.serveStatic("/static");
 
-app.get("/", mockHomeController);
-app.get("/posts", mockPostsController);
-app.get("/posts/:slug", mockPostController);
+app.get("/", homeController);
+app.get("/posts", postsController);
+app.get("/posts/:slug", postController);
 
 function assertSharedTemplates(document: Document) {
   // HEADER ASSERTIONS
@@ -215,7 +193,7 @@ describe("pages", () => {
 
     const paragraph = notFoundContent.querySelector("p");
     assertExists(paragraph, "Paragraph does not exist");
-    assertEquals(paragraph.textContent, "Post doesn't exist");
+    assertEquals(paragraph.textContent, postNotFoundErrorMessage);
 
     const homeLink = notFoundContent.querySelector("a");
     assertExists(homeLink, "Home link does not exist");

@@ -1,7 +1,8 @@
 import matter from "gray-matter";
 import { Marked } from "marked";
-import { PostMeta, Sort } from "../types.ts";
+import { IPostsCache, PostData, PostMeta } from "../types.ts";
 import { extendPostMeta } from "../utilities/extendPostMeta.ts";
+import { postNotFoundErrorMessage } from "../consts.ts";
 
 export const firstMockPost = `---
 date: 2024-01-28
@@ -224,52 +225,43 @@ const mockPosts = [
   { slug: "test-post-six", content: sixthMockPost },
 ];
 
-class MockPostsCache {
-  meta: PostMeta[] = [];
-  posts: Map<string, { meta: PostMeta; content: string }> = new Map();
+class MockPostsCache implements IPostsCache {
+  getPost(slug: string): Promise<PostData> {
+    const cached = mockPosts.find((post) => post.slug === slug);
 
-  ascSortedMeta?: PostMeta[] = [];
-  descSortedMeta?: PostMeta[];
-
-  recentMeta?: PostMeta[];
-
-  constructor() {
-    this.init();
-  }
-
-  init() {
-    for (const mockPost of mockPosts) {
-      const { content, data } = matter(mockPost.content);
-      const postMeta = extendPostMeta(data, mockPost.slug);
+    if (cached) {
+      const { data, content } = matter(cached.content);
 
       const html = mdParser.parse(content) as string;
 
-      this.meta.push(postMeta);
-      this.posts.set(mockPost.slug, { meta: postMeta, content: html });
+      const postMeta = extendPostMeta(data, slug);
+
+      return Promise.resolve({ meta: postMeta, content: html });
     }
+
+    throw new Error(postNotFoundErrorMessage);
   }
 
-  getPost(slug: string) {
-    return this.posts.get(slug);
+  setPost(_slug: string, data: PostData): PostData {
+    return data;
   }
 
-  getSortedByDateMeta(sort: Sort = Sort.desc): PostMeta[] {
-    if (sort === Sort.asc) {
-      return structuredClone(this.meta).sort((a: PostMeta, b: PostMeta) =>
-        a.date.getTime() - b.date.getTime()
-      );
-    } else {
-      return structuredClone(this.meta).sort((a: PostMeta, b: PostMeta) =>
-        b.date.getTime() - a.date.getTime()
-      );
+  getPostsMeta(_key?: string): Promise<PostMeta[]> {
+    const meta = [];
+
+    for (const { slug, content } of mockPosts) {
+      const { data } = matter(content);
+
+      const postMeta = extendPostMeta(data, slug);
+
+      meta.push(postMeta);
     }
+
+    return Promise.resolve(meta);
   }
 
-  getRecentMeta() {
-    if (this.recentMeta) return this.recentMeta;
-    this.recentMeta = this.getSortedByDateMeta().slice(0, 5);
-
-    return this.recentMeta;
+  setPostsMeta(_key: string, data: PostMeta[]): PostMeta[] {
+    return data;
   }
 }
 

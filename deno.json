@@ -1,11 +1,7 @@
 {
   "imports": {
     "lightningcss": "npm:lightningcss@1.23.0",
-    "hljs": "npm:highlight.js/lib/core",
-    "hljs-js": "npm:highlight.js/lib/languages/javascript",
-    "hljs-ts": "npm:highlight.js/lib/languages/typescript",
-    "hljs-xml": "npm:highlight.js/lib/languages/xml",
-    "hljs-css": "npm:highlight.js/lib/languages/css",
+    "hljs": "npm:highlight.js@11.9.0",
     "gray-matter": "npm:gray-matter",
     "marked": "npm:marked",
     "marked-highlight": "npm:marked-highlight"
@@ -16,6 +12,6 @@
     "lint": "deno lint src",
     "fmt": "deno fmt src",
     "fmt-check": "deno fmt --check src",
-    "test": "deno test src -A"
+    "test": "deno test src -A -- --test"
   }
 }

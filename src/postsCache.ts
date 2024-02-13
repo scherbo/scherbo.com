@@ -3,16 +3,18 @@ import matter from "gray-matter";
 
 import { Cache } from "./utilities/cache.ts";
 import { enhancedMarkdownParser } from "./utilities/enhancedMarkdownParser.ts";
-import { PostMeta } from "./types.ts";
+import { IPostsCache, PostMeta } from "./types.ts";
 import { extendPostMeta } from "./utilities/extendPostMeta.ts";
+import { PostData } from "./types.ts";
+import { mockPostsCache } from "./mocks/posts.ts";
+import { postNotFoundErrorMessage, unknownErrorMessage } from "./consts.ts";
+
+const postsMetaDefaultKey = "postsmeta";
 
 const postsDirName = "posts";
 const postExtension = "md";
 
-const postNotFoundErrorMessage = "Post not found";
-const unknownErrorMessage = "Unknown error";
-
-class PostsCache extends Cache {
+class PostsCache extends Cache implements IPostsCache {
   constructor(state: Map<any, any>) {
     super(state);
   }
@@ -48,11 +50,11 @@ class PostsCache extends Cache {
     }
   }
 
-  setPost(slug: string, value: any) {
-    return this.set(slug, value);
+  setPost(slug: string, data: PostData): PostData {
+    return this.set(slug, data);
   }
 
-  async getPostsMeta(key: string): Promise<PostMeta[]> {
+  async getPostsMeta(key = postsMetaDefaultKey): Promise<PostMeta[]> {
     const cached = this.get(key);
 
     if (cached) return cached;
@@ -81,9 +83,11 @@ class PostsCache extends Cache {
     }
   }
 
-  setPostsMeta(key: string, value: any) {
-    return this.set(key, value);
+  setPostsMeta(key = postsMetaDefaultKey, data: PostMeta[]): PostMeta[] {
+    return this.set(key, data);
   }
 }
 
-export const postsCache = new PostsCache(new Map());
+const testing = Deno.args.includes("--test");
+
+export const postsCache = testing ? mockPostsCache : new PostsCache(new Map());
