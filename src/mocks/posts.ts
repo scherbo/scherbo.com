@@ -2,7 +2,7 @@ import matter from "gray-matter";
 import { Marked } from "marked";
 import { IPostsCache, PostData, PostMeta } from "../types.ts";
 import { extendPostMeta } from "../utilities/extendPostMeta.ts";
-import { postNotFoundErrorMessage } from "../consts.ts";
+import { ErrorMessages } from "../types.ts";
 
 export const firstMockPost = `---
 date: 2024-01-28
@@ -239,7 +239,7 @@ class MockPostsCache implements IPostsCache {
       return Promise.resolve({ meta: postMeta, content: html });
     }
 
-    throw new Error(postNotFoundErrorMessage);
+    throw new Error(ErrorMessages.postNotFound);
   }
 
   setPost(_slug: string, data: PostData): PostData {

@@ -7,7 +7,7 @@ import { IPostsCache, PostMeta } from "./types.ts";
 import { extendPostMeta } from "./utilities/extendPostMeta.ts";
 import { PostData } from "./types.ts";
 import { mockPostsCache } from "./mocks/posts.ts";
-import { postNotFoundErrorMessage, unknownErrorMessage } from "./consts.ts";
+import { ErrorMessages } from "./types.ts";
 
 const postsMetaDefaultKey = "postsmeta";
 
@@ -44,8 +44,8 @@ class PostsCache extends Cache implements IPostsCache {
       return this.setPost(slug, { meta: postMeta, content: html });
     } catch (error) {
       const errorMessage = error instanceof Deno.errors.NotFound
-        ? postNotFoundErrorMessage
-        : unknownErrorMessage;
+        ? ErrorMessages.postNotFound
+        : ErrorMessages.unknown;
       throw new Error(errorMessage);
     }
   }
@@ -79,7 +79,7 @@ class PostsCache extends Cache implements IPostsCache {
 
       return this.setPostsMeta(key, meta);
     } catch (_error) {
-      throw new Error("Posts meta not found...");
+      throw new Error(ErrorMessages.postsMetaNotFound);
     }
   }
 
