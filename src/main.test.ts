@@ -11,8 +11,7 @@ import { documentFromResponse } from "./utilities/documentFromResponse.ts";
 import { homeController } from "./controllers/home.ts";
 import { postsController } from "./controllers/posts.ts";
 import { postController } from "./controllers/post.ts";
-
-import { postNotFoundErrorMessage } from "./consts.ts";
+import { ErrorMessages } from "./types.ts";
 
 const app = new App();
 
@@ -193,7 +192,7 @@ describe("pages", () => {
 
     const paragraph = notFoundContent.querySelector("p");
     assertExists(paragraph, "Paragraph does not exist");
-    assertEquals(paragraph.textContent, postNotFoundErrorMessage);
+    assertEquals(paragraph.textContent, ErrorMessages.postNotFound);
 
     const homeLink = notFoundContent.querySelector("a");
     assertExists(homeLink, "Home link does not exist");

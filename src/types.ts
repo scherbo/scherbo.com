@@ -14,6 +14,12 @@ export enum NavLink {
   posts = "posts",
 }
 
+export enum ErrorMessages {
+  postNotFound = "Post not found",
+  postsMetaNotFound = "Posts meta not found",
+  unknown = "Unknown error",
+}
+
 export type Meta = {
   title: string;
   description: string;
