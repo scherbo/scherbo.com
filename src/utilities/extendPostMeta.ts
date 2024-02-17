@@ -11,5 +11,7 @@ export function extendPostMeta(
     description: data.description ?? "",
     keywords: data.keywords ?? [],
     slug,
+    postImageCredit: data.postImageCredit ?? "",
+    postImageLink: data.postImageLink ?? "",
   };
 }
