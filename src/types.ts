@@ -1,6 +1,8 @@
 export type PostMeta = {
   slug: string;
   date: Date;
+  postImageCredit: string;
+  postImageLink: string;
 } & Meta;
 
 export type IconProps = {

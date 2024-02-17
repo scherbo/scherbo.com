@@ -20,9 +20,9 @@ class PostsCache extends Cache implements IPostsCache {
   }
 
   /**
-   * if post is cached return markdown string immediately;
+   * if post is cached return html string immediately;
    *
-   * if slug is valid - cache it and return markdown string
+   * if slug is valid - cache it and return html string
    *
    * if slug is invalid - throw error
    */

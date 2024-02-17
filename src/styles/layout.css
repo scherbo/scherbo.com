@@ -34,6 +34,14 @@
   min-height: 100vh;
 }
 
+.w-full {
+  width: 100%;
+}
+
+.max-w-75 {
+  max-width: 75rem;
+}
+
 /* .gap-x-xs {
   column-gap: 0.5rem;
 }
@@ -97,6 +105,11 @@
   padding-bottom: 2.5rem;
 }
 
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* .mx-xs {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -147,6 +160,14 @@
   margin-bottom: 2.5rem;
 }
 
+.mb-xl {
+  margin-bottom: 4rem;
+}
+
+.mb-5 {
+  margin-bottom: 5rem;
+}
+
 .mb-7\.5 {
   margin-bottom: 7.5rem;
 }
@@ -173,4 +194,20 @@
 
 .m0 {
   margin: 0;
+}
+
+.br-xs {
+  border-radius: 0.5rem;
+}
+
+.br-sm {
+  border-radius: 1rem;
+}
+
+.br-md {
+  border-radius: 1.5rem;
+}
+
+.of-hidden {
+  overflow: hidden;
 }
