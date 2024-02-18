@@ -10,14 +10,14 @@ export function footerTmpl() {
   return html`
     <footer class="text-center mt-7.5 mb-7.5" data-id="footer">
       <div class="flex justify-center gap-x-md mb-md">
-        <a href="${githubUrl}" target="_blank" data-id="gh-link" class="text-sm text-secondary">${
+        <a href="${githubUrl}" target="_blank" data-id="gh-link" aria-label="github-profile" class="text-sm text-secondary">${
     githubIconTmpl({
       width: 35,
       height: 35,
       classes: "fill-secondary hover:fill-main",
     })
   }</a>
-        <a href="${linkedinUrl}" target="_blank" data-id="li-link" class="text-sm text-secondary">${
+        <a href="${linkedinUrl}" target="_blank" data-id="li-link" aria-label="linkedin-profile" class="text-sm text-secondary">${
     linkedinIconTmpl({
       width: 35,
       height: 35,
