@@ -1,9 +1,9 @@
 .container {
   width: 100%;
-  max-width: 650px;
+  max-width: 670px;
   margin: 0 auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .container-wide {
@@ -210,4 +210,14 @@
 
 .of-hidden {
   overflow: hidden;
+}
+
+@media screen and (max-width: 678px) {
+  .md\:flex-col {
+    flex-direction: column;
+  }
+
+  .md\:gap-y-sm {
+    row-gap: 1rem;
+  }
 }

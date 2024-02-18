@@ -15,11 +15,10 @@ export function postsTmpl(postsMeta: PostMeta[]) {
           ${
     postsMeta.map((post, i) =>
       html`
-            <li class="flex justify-between">
+            <li class="md:flex-col md:gap-y-sm flex justify-between mb-lg leading-normal">
               <a href="/posts/${post.slug}" data-id="link-${i}" class="text-sm text-main">${post.title}</a>
               <p class="text-sm text-secondary">${stringifyDate(post.date)}</p>
             </li>
-            ${i !== postsMeta.length - 1 ? html`<hr class="my-md" />` : ""}
           `
     ).join("")
   }

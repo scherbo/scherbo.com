@@ -15,7 +15,7 @@ export function headerTmpl({ activeNavLink }: HeaderProps) {
   return html`
     <header class="container container-wide flex justify-between py-lg mb-15" data-id="header">
       <!-- logo -->
-      <a href="/" data-id="home-icon">
+      <a href="/" data-id="home-icon" aria-label="home-link">
         ${
     houseIconTmpl({
       width: 35,
@@ -54,7 +54,7 @@ export function navTmpl({ activeNavLink }: NavProps) {
       dataID: "posts-link",
     })
   }
-      <button class="theme-switcher" data-id="theme-switcher"></button>
+      <button class="theme-switcher" data-id="theme-switcher" aria-label="switch-theme"></button>
 
       <template id="sun-icon">
         ${sunIconTmpl({ width: 35, height: 35, classes: "fill-secondary" })}
@@ -76,7 +76,7 @@ interface NavLinkProps {
 
 export function navLinkTmpl({ href, text, active, dataID }: NavLinkProps) {
   return html`
-    <a href="${href}" data-id="${dataID}" class="${
+    <a href="${href}" data-id="${dataID}" aria-label="${text.toLowerCase()}-link" class="${
     active ? "text-main text-semibold" : "text-secondary"
   } hover:text-main text-sm no-decoration">${text}</a>
   `;
