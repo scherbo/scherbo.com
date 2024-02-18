@@ -1,5 +1,6 @@
 import { NavLink } from "../types.ts";
 import { html } from "../utilities/html.ts";
+import { containerTmpl } from "./container.ts";
 
 import { houseIconTmpl } from "./icons/house.ts";
 import { moonIconTmpl } from "./icons/moon.ts";
@@ -13,20 +14,29 @@ export function headerTmpl({ activeNavLink }: HeaderProps) {
   const homeActive = activeNavLink && activeNavLink === NavLink.home;
 
   return html`
-    <header class="container container-wide flex justify-between py-lg mb-15" data-id="header">
-      <!-- logo -->
-      <a href="/" data-id="home-icon" aria-label="home-link">
-        ${
-    houseIconTmpl({
-      width: 35,
-      height: 35,
-      classes: homeActive ? "fill-main" : "fill-secondary hover:fill-main",
+    <header class="mb-15" data-id="header">
+      ${
+    containerTmpl({
+      wide: true,
+      children: html`
+          <div class="flex justify-between py-lg">
+            <!-- logo -->
+            <a href="/" data-id="home-icon" aria-label="home-link">
+              ${
+        houseIconTmpl({
+          width: 35,
+          height: 35,
+          classes: homeActive ? "fill-main" : "fill-secondary hover:fill-main",
+        })
+      }
+            </a>
+
+            <!-- navigation -->
+            ${navTmpl({ activeNavLink })}
+          </div>
+        `,
     })
   }
-      </a>
-
-      <!-- navigation -->
-      ${navTmpl({ activeNavLink })}
     </header>
   `;
 }
