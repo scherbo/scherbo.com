@@ -5,7 +5,7 @@ import { postController } from "./controllers/post.ts";
 
 const app = new App();
 
-app.serveStatic("/static");
+app.static("/static", { dir: true });
 
 app.get("/", homeController);
 app.get("/posts", postsController);

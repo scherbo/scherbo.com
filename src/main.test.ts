@@ -15,8 +15,6 @@ import { ErrorMessages } from "./types.ts";
 
 const app = new App();
 
-app.serveStatic("/static");
-
 app.get("/", homeController);
 app.get("/posts", postsController);
 app.get("/posts/:slug", postController);
