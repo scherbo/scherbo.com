@@ -1,3 +1,13 @@
+export type Route = {
+  params: Record<string, string>;
+  query: Record<string, string>;
+  path: string;
+};
+
+export type Context = {
+  route: Route;
+};
+
 export type PostMeta = {
   slug: string;
   date: Date;
