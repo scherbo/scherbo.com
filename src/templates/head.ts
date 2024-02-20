@@ -19,6 +19,8 @@ export function headTmpl(props: Head) {
       <meta name="description" content="${props.description}">
       <meta name="keywords" content="${props.keywords.join(", ")}">
 
+      <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+
       <!-- TODO: add open graph meta data -->
 
       <!-- styles -->
