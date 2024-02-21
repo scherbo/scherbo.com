@@ -4,14 +4,19 @@
     "hljs": "npm:highlight.js@11.9.0",
     "gray-matter": "npm:gray-matter",
     "marked": "npm:marked",
-    "marked-highlight": "npm:marked-highlight"
+    "marked-highlight": "npm:marked-highlight",
+    "esbuild": "npm:esbuild@0.20.1"
   },
   "tasks": {
-    "css:dev": "deno run -A src/css.ts",
-    "dev": "deno run --allow-net --allow-read --allow-ffi --watch src/main.ts --dev & deno task css:dev",
+    "css:dev": "deno run -A src/scripts/css.ts",
+    "js:dev": "deno run -A src/scripts/client.ts",
+    "dev": "deno run --allow-net --allow-read --allow-ffi --watch src/main.ts --dev & deno task css:dev & deno task js:dev",
     "lint": "deno lint src",
     "fmt": "deno fmt src",
     "fmt-check": "deno fmt --check src",
     "test": "deno test src -A -- --test"
+  },
+  "lint": {
+    "exclude": ["static"]
   }
 }

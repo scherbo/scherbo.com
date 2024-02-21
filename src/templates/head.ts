@@ -27,7 +27,7 @@ export function headTmpl(props: Head) {
       ${styles}
 
       <!-- scripts -->
-      <script src="/static/index.js" defer></script>
+      <script src="/static/client.js" defer></script>
       <script defer data-domain="scherbo.com" src="https://plausible.io/js/script.js"></script>
     </head> 
   `;
