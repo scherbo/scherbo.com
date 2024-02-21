@@ -1,6 +1,10 @@
 import { bundle } from "lightningcss";
 import { debounce } from "https://deno.land/std@0.207.0/async/debounce.ts";
 
+/*
+  This script bundles styles
+*/
+
 async function buildStyles() {
   const { code } = bundle({
     filename: "src/styles/main.css",
