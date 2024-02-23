@@ -25,7 +25,9 @@ export function footerTmpl() {
     })
   }</a>
       </div>
-      <p class="text-sm text-secondary" data-id="copyright">All rights reserved &copy; Sergey Scherbo 2024</p>
+      <p class="text-sm text-secondary" data-id="copyright">All rights reserved &copy; Sergey Scherbo ${
+    new Date().getFullYear()
+  }</p>
     </footer>
   `;
 }
