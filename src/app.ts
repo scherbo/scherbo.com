@@ -16,10 +16,7 @@ type RegisteredRoute = {
 
 export class App {
   getRoutes: RegisteredRoute[] = [];
-
   staticRoutes = new Map();
-
-  pathToStaticDir?: string;
 
   handle = (request: Request): Response | Promise<Response> => {
     const requestUrl = new URL(request.url);
@@ -63,7 +60,10 @@ export class App {
     this.getRoutes.push({ pathToMatch, handler });
   };
 
-  static(pathToMatch: string, options: { dir: boolean; reroute?: string }) {
+  static = (
+    pathToMatch: string,
+    options: { dir: boolean; reroute?: string },
+  ): void => {
     this.staticRoutes.set(pathToMatch, options);
-  }
+  };
 }

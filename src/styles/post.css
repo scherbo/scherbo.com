@@ -15,14 +15,36 @@
   margin-bottom: 2rem;
 }
 
+.post a {
+  color: var(--text-main);
+}
+
 .post p {
   font-size: 1.6rem;
   color: var(--text-main);
   line-height: 1.625;
 }
 
-.post p:not(:last-of-type) {
+.post p:not(:last-child) {
   margin-bottom: 2rem;
+}
+
+.post ul {
+  padding-left: 2rem;
+}
+
+.post ul:not(:last-child) {
+  margin-bottom: 2rem;
+}
+
+.post li {
+  font-size: 1.6rem;
+  color: var(--text-main);
+  line-height: 1.625;
+}
+
+.post li:not(:last-child) {
+  margin-bottom: 1rem;
 }
 
 .post pre {
@@ -32,6 +54,12 @@
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
   background-color: #1D1E25;
+}
+
+.post code:not(.hljs) {
+  padding: 0.3rem 0.75rem;
+  border-radius: 0.75rem;
+  background-color: var(--bg-secondary);
 }
 
 .post .notice {
