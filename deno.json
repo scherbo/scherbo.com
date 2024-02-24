@@ -17,9 +17,9 @@
     "test": "deno test src -A -- --test"
   },
   "lint": {
-    "exclude": ["static"]
+    "exclude": ["static", "posts"]
   },
   "fmt": {
-    "exclude": ["static"]
+    "exclude": ["static", "posts"]
   }
 }

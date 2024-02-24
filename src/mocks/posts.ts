@@ -1,6 +1,6 @@
 import matter from "gray-matter";
 import { Marked } from "marked";
-import { IPostsCache, PostData, PostMeta } from "../types.ts";
+import { IPostsCache, IPostsMetaCache, PostData, PostMeta } from "../types.ts";
 import { extendPostMeta } from "../utilities/extendPostMeta.ts";
 import { ErrorMessages } from "../types.ts";
 
@@ -245,7 +245,9 @@ class MockPostsCache implements IPostsCache {
   setPost(_slug: string, data: PostData): PostData {
     return data;
   }
+}
 
+class MockPostsMetaCache implements IPostsMetaCache {
   getPostsMeta(_key?: string): Promise<PostMeta[]> {
     const meta = [];
 
@@ -266,3 +268,4 @@ class MockPostsCache implements IPostsCache {
 }
 
 export const mockPostsCache = new MockPostsCache();
+export const mockPostsMetaCache = new MockPostsMetaCache();
