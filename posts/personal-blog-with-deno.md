@@ -1,5 +1,5 @@
 ---
-date: 2024-02-23
+date: 2024-02-24
 title: Building personal blog with Deno and Deno Deploy
 description: Learn step-by-step how to harness Deno's powerful features to build a robust and modern blog, and seamlessly deploy it to the cloud with Deno Deploy.
 keywords:
@@ -40,7 +40,7 @@ not gonna use any frameworks. Just Deno.
   <h3>Other options</h3>
   <p>There's another solution which doesn't require using FS API and therefore Deno/Deno Deploy - github provides an access to the raw files in your repository through `raw.githubusercontent.com` domain, so it's possible to access static content with HTTP GET requests. For example <a href="https://raw.githubusercontent.com/scherbo/scherbo.com/main/posts/personal-blog-with-deno.md" target="_blank">click here</a> to access the content if this post.</p>
 
-<p>If you are not interested in making your website a bit more dynamic - another (and most simplest) way would be to pre-build all the pages and push them to any Edge Network.</p>
+  <p>If you are not interested in making your website a bit more dynamic - another (and most simplest) way would be to pre-build all the pages and push them to any Edge Network.</p>
 </div>
 
 ## Project structure
@@ -48,11 +48,24 @@ not gonna use any frameworks. Just Deno.
 The project structure is gonna look like this:
 
 ```md
-.github // github actions workflows build.yml deploy.yml post // post .md files
-src client // client-side code controllers scripts // scripts to bundle js/css
-styles // vanilla css templates // html templates utilities
+.github // github actions
+  workflows
+    build.yml
+    deploy.yml
+posts
+src
+  client // client-side code
+  controllers
+  scripts // scripts to bundle js/css
+  styles // vanilla css
+  templates // html templates
+  utilities
 
-app.ts main.ts postsCache.ts types.ts static // bundled assets, images, fonts
+  app.ts
+  main.ts
+  postsCache.ts
+  types.ts
+static // bundled assets, images, fonts
 deno.json // deno config file
 ```
 
@@ -70,10 +83,6 @@ type RegisteredRoute = {
     request: Request,
     context: Context,
   ) => Response | Promise<Response>;
-};
-
-type StaticRouteOptions = {
-  dir: boolean;
 };
 
 export class App {
@@ -264,11 +273,7 @@ const app = new App();
 
 app.get("/", () => htmlResponse(`<p>Home page</p>`));
 app.get("/posts", () => htmlResponse(`<p>Posts page</p>`));
-app.get(
-  "/posts/:slug",
-  (_request, context) =>
-    htmlResponse(`<p>Post page, slug: ${context.route.params.slug}</p>`),
-);
+app.get("/posts/:slug", (_request, context) => htmlResponse(`<p>Post page, slug: ${context.route.params.slug}</p>`));
 
 Deno.serve(app.handle);
 ```
@@ -278,3 +283,79 @@ To start server open terminal and run the following command:
 ```sh
 deno run --allow-net src/main.ts
 ```
+
+## Posts cache
+
+Another key component of our website is gonna be posts cache. Of course it is possible to read `posts` directory on every request, but the better and, more importantly, faster approach is to cache previously read posts, so any subsequent request to the same post is gonna be answered much quicker. Let's start by creating a Cache abstraction:
+
+```ts
+// utilities/cache.ts
+
+export class Cache<K, V> {
+  state: Map<K, V>;
+
+  constructor(initial: Map<K, V>) {
+    this.state = initial;
+  }
+
+  protected get(key: K): V | undefined {
+    return this.state.get(key);
+  }
+
+  protected set(key: K, value: V): V {
+    this.state.set(key, value);
+    return value;
+  }
+}
+```
+
+Now let's build `PostsCache` based on previously created `Cache`:
+
+```ts
+// src/postsCache.ts
+
+const postsDirName = "posts";
+const postExtension = "md";
+
+class PostsCache extends Cache<string, PostData> implements IPostsCache {
+  constructor(state: Map<string, PostData>) {
+    super(state);
+  }
+
+  async getPost(slug: string) {
+    const cached = this.get(slug);
+
+    if (cached) return cached;
+
+    try {
+      const mdString = await Deno.readTextFile(
+        `${Deno.cwd()}/${postsDirName}/${slug}.${postExtension}`,
+      );
+
+      const { data, content } = matter(mdString);
+      const html = enhancedMarkdownParser(content) as string;
+
+      const postMeta = extendPostMeta(data, slug);
+
+      return this.setPost(slug, { meta: postMeta, content: html });
+    } catch (error) {
+      const errorMessage = error instanceof Deno.errors.NotFound
+        ? ErrorMessages.postNotFound
+        : ErrorMessages.unknown;
+      throw new Error(errorMessage);
+    }
+  }
+
+  setPost(slug: string, data: PostData): PostData {
+    return this.set(slug, data);
+  }
+}
+```
+
+Let's figure out what's happening in the `getPost` method. Firtly we check if there is a cached post with provided slug, and if so - return it immediately. Otherwise we read post using File System API, then using `gray-matter` package we separate post meta data from it's content, then we pass the content to the `enhancedMarkdownParser` utility, which parses markdown string into html string, and lastly we cache post. In case there is no post with provided slug - an error will be thrown by the `Deno.readTextFile` function.
+
+And that's it. Now we can create markdown posts, put them into `posts` directory, and on every request to the `/posts/:slug` we will access posts (if exist) via `PostsCache`.
+
+<div class="notice success">
+  <p>If you are interested in diving deeper into the source code, <a href="https://github.com/scherbo/scherbo.com" target="_blank">this link</a> leads to the repository of the website.</p>
+</div>
