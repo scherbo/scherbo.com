@@ -45,10 +45,10 @@ export type PostData = {
 
 export interface IPostsCache {
   getPost(slug: string): Promise<PostData>;
-
   setPost(slug: string, data: PostData): PostData;
+}
 
+export interface IPostsMetaCache {
   getPostsMeta(key?: string): Promise<PostMeta[]>;
-
   setPostsMeta(key: string, data: PostMeta[]): PostMeta[];
 }
