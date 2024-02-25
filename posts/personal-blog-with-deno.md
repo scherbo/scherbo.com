@@ -71,25 +71,25 @@ on the `posts` page and `posst/:slug` page is a page for individual post.
 The project structure is gonna look like this:
 
 ```md
-.github // github actions
+.github       // github actions
   workflows
     build.yml
     deploy.yml
 posts
 src
-  client // client-side code
+  client      // client-side code
   controllers
-  scripts // scripts to bundle js/css
-  styles // vanilla css
-  templates // html templates
+  scripts     // scripts to bundle js/css
+  styles      // vanilla css
+  templates   // html templates
   utilities
 
   app.ts
   main.ts
   postsCache.ts
   types.ts
-static // bundled assets, images, fonts
-deno.json // deno config file
+static        // bundled assets, images, fonts
+deno.json     // deno config file
 ```
 
 ## Building the base
