@@ -1,5 +1,5 @@
 ---
-date: 2024-02-24
+date: 2024-02-25
 title: Building personal blog with Deno and Deno Deploy
 description: Learn step-by-step how to harness Deno's powerful features to build a robust and modern blog, and seamlessly deploy it to the cloud with Deno Deploy.
 keywords:
@@ -38,34 +38,44 @@ not gonna use any frameworks. Just Deno.
 
 <div class="notice info">
   <h3>Other options</h3>
-  <p>There's another solution which doesn't require using FS API and therefore Deno/Deno Deploy - github provides an access to the raw files in your repository through `raw.githubusercontent.com` domain, so it's possible to access static content with HTTP GET requests. For example <a href="https://raw.githubusercontent.com/scherbo/scherbo.com/main/posts/personal-blog-with-deno.md" target="_blank">click here</a> to access the content if this post.</p>
+  <p>There's another solution which doesn't require using FS API and therefore Deno/Deno Deploy - Github provides an access to the raw files in your repository through `raw.githubusercontent.com` domain, so it's possible to access static content with HTTP GET requests. For example <a href="https://raw.githubusercontent.com/scherbo/scherbo.com/main/posts/personal-blog-with-deno.md" target="_blank">click here</a> to access the content if this post.</p>
 
-  <p>If you are not interested in making your website a bit more dynamic - another (and most simplest) way would be to pre-build all the pages and push them to any Edge Network.</p>
+<p>If you are not interested in making your website a bit more dynamic - another (and most simplest) way would be to pre-build all the pages and push them to any Edge Network.</p>
 </div>
+
+## Architecture
+
+```sh
+                  --- PostsCache
+                /
+              /
+Web Server ---
+              \
+                \
+                  --- Static
+```
+
+The Architecture of the website is trivial:
+
+1. There's a Web Server which is responsible for processing HTTP requests.
+2. PostsCache is responsible for reading posts from the disk as well as caching
+   them.
+3. Web Server also serves static files from the `static` directory
+
+We gonna have 3 routes: `home`, `posts` and `posts/:slug`. Five most recent
+posts will be displayed on the `home` page, all existing posts will be displayed
+on the `posts` page and `posst/:slug` page is a page for individual post.
 
 ## Project structure
 
 The project structure is gonna look like this:
 
 ```md
-.github // github actions
-  workflows
-    build.yml
-    deploy.yml
-posts
-src
-  client // client-side code
-  controllers
-  scripts // scripts to bundle js/css
-  styles // vanilla css
-  templates // html templates
-  utilities
+.github // github actions workflows build.yml deploy.yml posts src client //
+client-side code controllers scripts // scripts to bundle js/css styles //
+vanilla css templates // html templates utilities
 
-  app.ts
-  main.ts
-  postsCache.ts
-  types.ts
-static // bundled assets, images, fonts
+app.ts main.ts postsCache.ts types.ts static // bundled assets, images, fonts
 deno.json // deno config file
 ```
 
@@ -230,8 +240,8 @@ export function htmlResponse(htmlTmpl: string, status = 200): Response {
 }
 ```
 
-It accept html template string and an HTTP status code and returns a new
-instance of html Response.
+It accept html template string, an HTTP status code and returns a new instance
+of html Response.
 
 Now let's get back the `App` and `.get()` method:
 
@@ -273,7 +283,11 @@ const app = new App();
 
 app.get("/", () => htmlResponse(`<p>Home page</p>`));
 app.get("/posts", () => htmlResponse(`<p>Posts page</p>`));
-app.get("/posts/:slug", (_request, context) => htmlResponse(`<p>Post page, slug: ${context.route.params.slug}</p>`));
+app.get(
+  "/posts/:slug",
+  (_request, context) =>
+    htmlResponse(`<p>Post page, slug: ${context.route.params.slug}</p>`),
+);
 
 Deno.serve(app.handle);
 ```
@@ -286,7 +300,11 @@ deno run --allow-net src/main.ts
 
 ## Posts cache
 
-Another key component of our website is gonna be posts cache. Of course it is possible to read `posts` directory on every request, but the better and, more importantly, faster approach is to cache previously read posts, so any subsequent request to the same post is gonna be answered much quicker. Let's start by creating a Cache abstraction:
+Another key component of our website is gonna be posts cache. Of course it is
+possible to read `posts` directory on every request, but the better and, more
+importantly, faster approach is to cache previously read posts, so any
+subsequent request to the same post is gonna be answered much quicker. Let's
+start by creating a Cache abstraction:
 
 ```ts
 // utilities/cache.ts
@@ -352,10 +370,138 @@ class PostsCache extends Cache<string, PostData> implements IPostsCache {
 }
 ```
 
-Let's figure out what's happening in the `getPost` method. Firtly we check if there is a cached post with provided slug, and if so - return it immediately. Otherwise we read post using File System API, then using `gray-matter` package we separate post meta data from it's content, then we pass the content to the `enhancedMarkdownParser` utility, which parses markdown string into html string, and lastly we cache post. In case there is no post with provided slug - an error will be thrown by the `Deno.readTextFile` function.
+Let's figure out what's happening in the `getPost` method. Firtly we check if
+there is a cached post with provided slug, and if so - return it immediately.
+Otherwise we read post using File System API, then using `gray-matter` package
+we separate post meta data from it's content, then we pass the content to the
+`enhancedMarkdownParser` utility, which parses markdown string into html string,
+and lastly we cache post. In case there is no post with provided slug - an error
+will be thrown by the `Deno.readTextFile` function.
 
-And that's it. Now we can create markdown posts, put them into `posts` directory, and on every request to the `/posts/:slug` we will access posts (if exist) via `PostsCache`.
+Now we can create markdown posts, put them into `posts` directory, and on every
+request to the `/posts/:slug` we will access posts (if exist) via `PostsCache`.
 
-<div class="notice success">
-  <p>If you are interested in diving deeper into the source code, <a href="https://github.com/scherbo/scherbo.com" target="_blank">this link</a> leads to the repository of the website.</p>
-</div>
+## Meta cache
+
+Since we want to display list of posts on the `home` and `posts` routes, we want
+to access posts meta data (slug, data, title) to display it. Let's create
+`PostsMetaCache` for this purpose:
+
+```ts
+// src/postsCache.ts
+
+class PostsMetaCache extends Cache<string, PostMeta[]>
+  implements IPostsMetaCache {
+  constructor(state: Map<string, PostMeta[]>) {
+    super(state);
+  }
+
+  async getPostsMeta(key = postsMetaDefaultKey): Promise<PostMeta[]> {
+    const cached = this.get(key);
+
+    if (cached) return cached;
+
+    try {
+      const rawPosts = Deno.readDir(`${Deno.cwd()}/${postsDirName}`);
+      const meta: PostMeta[] = [];
+
+      for await (const post of rawPosts) {
+        const raw = await Deno.readTextFile(`${postsDirName}/${post.name}`);
+        const slug = post.name.slice(
+          0,
+          post.name.length - postExtension.length - 1,
+        );
+
+        const { data } = matter(raw);
+
+        const postMeta = extendPostMeta(data, slug);
+
+        meta.push(postMeta);
+      }
+
+      return this.setPostsMeta(key, meta);
+    } catch (_error) {
+      throw new Error(ErrorMessages.postsMetaNotFound);
+    }
+  }
+
+  setPostsMeta(key = postsMetaDefaultKey, data: PostMeta[]): PostMeta[] {
+    return this.set(key, data);
+  }
+}
+```
+
+It's almost identical to the `PostsCache` except that initially we read posts
+directory, and then we read all the posts.
+
+## Controllers
+
+Now instead of inlining our handlers, let's create controllers for each route:
+
+```ts
+// src/controllers/home.ts
+
+export async function homeController(): Promise<Response> {
+  const meta = await postsCache.getPostsMeta();
+  const sortedMeta = meta.slice().sort((a, b) =>
+    b.date.getTime() - a.date.getTime()
+  );
+  const recentMeta = sortedMeta.slice(0, 5);
+
+  return htmlResponse(homeTmpl(recentMeta));
+}
+
+// src/controllers/posts.ts
+
+export async function postsController(): Promise<Response> {
+  const meta = await postsCache.getPostsMeta();
+  const sortedMeta = meta.slice().sort((a, b) =>
+    b.date.getTime() - a.date.getTime()
+  );
+
+  return htmlResponse(postsTmpl(sortedMeta));
+}
+
+// src/controllers/post.ts
+
+export async function postController(
+  _request: Request,
+  context: Context,
+): Promise<Response> {
+  try {
+    const { meta, content } = await postsCache.getPost(
+      context.route.params.slug,
+    );
+    return htmlResponse(postTmpl({ meta, content }));
+  } catch (error) {
+    return htmlResponse(notFoundTmpl(undefined, error.message), 404);
+  }
+}
+```
+
+And lastly let's use these controllers in our `main.ts` file:
+
+```ts
+// src/main.ts
+
+import { App } from "./app.ts";
+import { homeController } from "./controllers/home.ts";
+import { postsController } from "./controllers/posts.ts";
+import { postController } from "./controllers/post.ts";
+
+const app = new App();
+
+app.get("/", homeController);
+app.get("/posts", postsController);
+app.get("/posts/:slug", postController);
+
+Deno.serve(app.handle);
+```
+
+This is it. We have a fully functional Deno website, with 3 routes. I
+intentionally haven't covered html templates, as they are just javascript
+template literals. If you are interested in diving deeper, make sure to check
+out the [source code](https://github.com/scherbo/scherbo.com).
+
+In the next post I'll describe, how to add client-side routing,
+internationalization and more!
