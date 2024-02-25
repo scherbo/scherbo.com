@@ -8,4 +8,4 @@ pre-push:
   commands:
     test:
       glob: "*.test.ts"
-      run: deno test -A {all_files}
+      run: deno test -A {all_files} -- --test 
