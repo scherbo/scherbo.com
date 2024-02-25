@@ -71,11 +71,24 @@ on the `posts` page and `posst/:slug` page is a page for individual post.
 The project structure is gonna look like this:
 
 ```md
-.github // github actions workflows build.yml deploy.yml posts src client //
-client-side code controllers scripts // scripts to bundle js/css styles //
-vanilla css templates // html templates utilities
+.github // github actions
+  workflows
+    build.yml
+    deploy.yml
+posts
+src
+  client // client-side code
+  controllers
+  scripts // scripts to bundle js/css
+  styles // vanilla css
+  templates // html templates
+  utilities
 
-app.ts main.ts postsCache.ts types.ts static // bundled assets, images, fonts
+  app.ts
+  main.ts
+  postsCache.ts
+  types.ts
+static // bundled assets, images, fonts
 deno.json // deno config file
 ```
 
@@ -283,11 +296,7 @@ const app = new App();
 
 app.get("/", () => htmlResponse(`<p>Home page</p>`));
 app.get("/posts", () => htmlResponse(`<p>Posts page</p>`));
-app.get(
-  "/posts/:slug",
-  (_request, context) =>
-    htmlResponse(`<p>Post page, slug: ${context.route.params.slug}</p>`),
-);
+app.get("/posts/:slug", (_request, context) => htmlResponse(`<p>Post page, slug: ${context.route.params.slug}</p>`));
 
 Deno.serve(app.handle);
 ```
@@ -390,8 +399,7 @@ to access posts meta data (slug, data, title) to display it. Let's create
 ```ts
 // src/postsCache.ts
 
-class PostsMetaCache extends Cache<string, PostMeta[]>
-  implements IPostsMetaCache {
+class PostsMetaCache extends Cache<string, PostMeta[]> implements IPostsMetaCache {
   constructor(state: Map<string, PostMeta[]>) {
     super(state);
   }
@@ -469,9 +477,7 @@ export async function postController(
   context: Context,
 ): Promise<Response> {
   try {
-    const { meta, content } = await postsCache.getPost(
-      context.route.params.slug,
-    );
+    const { meta, content } = await postsCache.getPost(context.route.params.slug);
     return htmlResponse(postTmpl({ meta, content }));
   } catch (error) {
     return htmlResponse(notFoundTmpl(undefined, error.message), 404);
