@@ -86,7 +86,9 @@ interface NavLinkProps {
 
 export function navLinkTmpl({ href, text, active, dataID }: NavLinkProps) {
   return html`
-    <a href="${href}" data-id="${dataID}" aria-label="${text.toLowerCase()}-link" class="${
+    <a href="${href}" data-id="${dataID}" ${
+    active ? 'data-active="true"' : ""
+  } aria-label="${text.toLowerCase()}-link" class="${
     active ? "text-main text-semibold" : "text-secondary"
   } hover:text-main text-sm no-decoration">${text}</a>
   `;

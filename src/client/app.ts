@@ -6,12 +6,13 @@ enum Theme {
 }
 
 export class App {
-  appRoot: HTMLElement = document.getElementById("app")!;
   themeSwitcherEl: HTMLButtonElement = document.querySelector(
     ".theme-switcher",
   )!;
   moonIconEl: HTMLElement = document.getElementById("moon-icon")!;
   sunIconEl: HTMLElement = document.getElementById("sun-icon")!;
+
+  appRoot: HTMLElement = document.getElementById("app")!;
   html: HTMLElement = document.documentElement;
 
   theme?: Theme;
@@ -97,6 +98,8 @@ export class App {
   handlePopstate = async () => {
     const path = location.pathname;
 
+    this.updateNavLink(document.querySelector(`nav a[href="${path}"]`)!);
+
     const contentString = await this.fetchPageContent(path);
     const content = this.parsePageContent(contentString)!;
 
@@ -115,6 +118,9 @@ export class App {
 
     if (href === location.pathname) return;
 
+    // querying first nav link (always going to be "home") in case clicked link is the house icon
+    this.updateNavLink(href === "/" ? document.querySelector("nav a")! : a);
+
     // fetch new view
     const contentString = await this.fetchPageContent(href);
     const content = this.parsePageContent(contentString)!;
@@ -128,6 +134,24 @@ export class App {
 
     // attach new content links
     this.attachContentLinkListeners();
+  };
+
+  updateNavLink = (link: HTMLAnchorElement) => {
+    const activeLink = document.querySelector(
+      'header nav a[data-active="true"]',
+    );
+
+    if (activeLink) {
+      activeLink.classList.remove("text-main", "text-semibold");
+      activeLink.classList.add("text-secondary");
+      activeLink.removeAttribute("data-active");
+    }
+
+    if (link && link.parentElement?.tagName === "NAV") {
+      link.classList.remove("text-secondary");
+      link.classList.add("text-main", "text-semibold");
+      link.setAttribute("data-active", "true");
+    }
   };
 
   fetchPageContent = async (path: string) => {
