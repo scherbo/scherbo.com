@@ -6,8 +6,8 @@ import { containerTmpl } from "../container.ts";
 
 import { layoutTmpl } from "../layout.ts";
 
-export function homeTmpl(recentPosts: PostMeta[]) {
-  const content = html`
+export function homeContentTmpl(recentPosts: PostMeta[]) {
+  return html`
     <main class="mb-auto">
       ${
     containerTmpl({
@@ -40,7 +40,9 @@ export function homeTmpl(recentPosts: PostMeta[]) {
   }
     </main>
   `;
+}
 
+export function homeTmpl(recentPosts: PostMeta[]) {
   return html`
     ${
     layoutTmpl({
@@ -61,7 +63,7 @@ export function homeTmpl(recentPosts: PostMeta[]) {
           "Tips",
         ],
       },
-      content,
+      content: homeContentTmpl(recentPosts),
       activeNavLink: NavLink.home,
     })
   }

@@ -18,7 +18,7 @@ export function layoutTmpl(props: LayoutProps) {
       ${headTmpl(props.meta)}
 
       <body>
-        <div class="flex direction-column full-height">
+        <div class="flex direction-column full-height" id="app">
           <!-- header -->
           ${headerTmpl({ activeNavLink: props.activeNavLink })}
 

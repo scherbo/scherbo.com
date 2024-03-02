@@ -6,8 +6,8 @@ import { containerTmpl } from "../container.ts";
 
 import { layoutTmpl } from "../layout.ts";
 
-export function postsTmpl(postsMeta: PostMeta[]) {
-  const content = html`
+export function postsContentTmpl(postsMeta: PostMeta[]) {
+  return html`
     <main class="mb-auto">
       ${
     containerTmpl({
@@ -35,7 +35,9 @@ export function postsTmpl(postsMeta: PostMeta[]) {
   }
     </main>
   `;
+}
 
+export function postsTmpl(postsMeta: PostMeta[]) {
   return layoutTmpl({
     meta: {
       title: "All Posts on Web Development and Mental Health by Sergey Scherbo",
@@ -54,7 +56,7 @@ export function postsTmpl(postsMeta: PostMeta[]) {
         "Tips",
       ],
     },
-    content,
+    content: postsContentTmpl(postsMeta),
     activeNavLink: NavLink.posts,
   });
 }

@@ -10,8 +10,8 @@ interface PostProps {
   content: string;
 }
 
-export function postTmpl(props: PostProps) {
-  const content = html`
+export function postContentTmpl(props: PostProps) {
+  return html`
     <main>
       ${postHeaderTmpl(props.meta)}
       ${
@@ -22,10 +22,12 @@ export function postTmpl(props: PostProps) {
   }
     </main>
   `;
+}
 
+export function postTmpl(props: PostProps) {
   return layoutTmpl({
     meta: props.meta,
-    content,
+    content: postContentTmpl(props),
   });
 }
 
