@@ -56,8 +56,8 @@ export function postHeaderTmpl(props: PostMeta) {
     containerTmpl({
       classes: "p0",
       children: html`
-          <div class="mb-md br-md of-hidden">
-            <img class="w-full" src="/static/${props.slug}.webp" />
+          <div class="relative mb-md br-md of-hidden" id="post-image">
+            <img class="w-full" src="data:image/png;base64,${props.postImagePlug}" />
           </div>
         `,
       wide: true,
