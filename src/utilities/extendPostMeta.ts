@@ -13,5 +13,6 @@ export function extendPostMeta(
     slug,
     postImageCredit: data.postImageCredit ?? "",
     postImageLink: data.postImageLink ?? "",
+    postImagePlug: data.postImagePlug ?? "",
   };
 }

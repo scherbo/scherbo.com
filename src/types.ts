@@ -13,6 +13,7 @@ export type PostMeta = {
   date: Date;
   postImageCredit: string;
   postImageLink: string;
+  postImagePlug: string;
 } & Meta;
 
 export type IconProps = {

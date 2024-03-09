@@ -1,3 +1,5 @@
+import { Cache } from "../utilities/cache.ts";
+
 const themeKey = "theme";
 
 enum Theme {
@@ -18,6 +20,8 @@ export class App {
   theme?: Theme;
 
   DOMParser = new DOMParser();
+
+  cache = new Cache(new Map());
 
   constructor() {
     this.initTheme();
@@ -44,6 +48,12 @@ export class App {
 
     // handle back/forward browser buttons
     self.addEventListener("popstate", this.handlePopstate);
+
+    this.cache.set(location.pathname, document.querySelector("main"));
+
+    if (this.isPostPage()) {
+      this.fetchPostImage();
+    }
   };
 
   /*
@@ -100,14 +110,28 @@ export class App {
 
     this.updateNavLink(document.querySelector(`nav a[href="${path}"]`)!);
 
-    const contentString = await this.fetchPageContent(path);
-    const content = this.parsePageContent(contentString)!;
+    const cachedContent = this.cache.get(path);
 
-    const prevContent = document.querySelector("main")!;
+    if (cachedContent) {
+      const prevContent = document.querySelector("main")!;
 
-    this.appRoot.replaceChild(content, prevContent);
+      this.appRoot.replaceChild(cachedContent, prevContent);
+    } else {
+      const contentString = await this.fetchPageContent(path);
+      const content = this.parsePageContent(contentString)!;
 
-    this.attachContentLinkListeners();
+      this.cache.set(path, content);
+
+      const prevContent = document.querySelector("main")!;
+
+      this.appRoot.replaceChild(content, prevContent);
+
+      this.attachContentLinkListeners();
+
+      if (this.isPostPage()) {
+        this.fetchPostImage();
+      }
+    }
   };
 
   handleLink = async (event: MouseEvent) => {
@@ -121,19 +145,35 @@ export class App {
     // querying first nav link (always going to be "home") in case clicked link is the house icon
     this.updateNavLink(href === "/" ? document.querySelector("nav a")! : a);
 
-    // fetch new view
-    const contentString = await this.fetchPageContent(href);
-    const content = this.parsePageContent(contentString)!;
+    const cachedContent = this.cache.get(href);
 
-    const prevContent = document.querySelector("main")!;
+    if (cachedContent) {
+      const prevContent = document.querySelector("main")!;
 
-    this.appRoot.replaceChild(content, prevContent);
+      this.appRoot.replaceChild(cachedContent, prevContent);
 
-    // update history
-    history.pushState({}, "", href);
+      // update history
+      history.pushState({}, "", href);
+    } else {
+      const contentString = await this.fetchPageContent(href);
+      const content = this.parsePageContent(contentString)!;
 
-    // attach new content links
-    this.attachContentLinkListeners();
+      this.cache.set(href, content);
+
+      const prevContent = document.querySelector("main")!;
+
+      this.appRoot.replaceChild(content, prevContent);
+
+      // update history
+      history.pushState({}, "", href);
+
+      // attach new content links
+      this.attachContentLinkListeners();
+
+      if (this.isPostPage()) {
+        this.fetchPostImage();
+      }
+    }
   };
 
   updateNavLink = (link: HTMLAnchorElement) => {
@@ -170,4 +210,24 @@ export class App {
   /*
     === Routing END ===
   */
+
+  isPostPage = () => {
+    const postHeader = document.getElementById("post-image");
+    return postHeader ? true : false;
+  };
+
+  fetchPostImage = async () => {
+    const r = await fetch("/static/personal-blog-with-deno.webp");
+    const b = await r.blob();
+
+    const url = URL.createObjectURL(b);
+
+    const img = new Image();
+
+    img.classList.add("absolute", "left-0", "w-full", "h-full");
+    img.src = url;
+
+    const imageContainer = document.getElementById("post-image")!;
+    imageContainer.append(img);
+  };
 }
